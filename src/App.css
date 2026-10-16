@@ -1,0 +1,28 @@
+/* App-specific custom animations and utility overrides */
+@keyframes sprout-gentle-bob {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-4px);
+  }
+}
+
+@keyframes sprout-pulse-soft {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.92;
+    transform: scale(0.98);
+  }
+}
+
+.animate-sprout-bob {
+  animation: sprout-gentle-bob 3s ease-in-out infinite;
+}
+
+.animate-sprout-pulse {
+  animation: sprout-pulse-soft 2.5s ease-in-out infinite;
+}

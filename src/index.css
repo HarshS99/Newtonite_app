@@ -1,0 +1,45 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --primary: #176B45;
+    --primary-hover: #115335;
+    --primary-light: #E8F2EA;
+    --primary-tint: #F2F8F4;
+    --bg-warm: #F8FAF7;
+    --text-dark: #17251D;
+    --text-muted: #526359;
+    --border-subtle: #DDE7E1;
+    --card-bg: #FFFFFF;
+  }
+
+  html, body {
+    overflow-x: hidden;
+    max-width: 100vw;
+  }
+
+  *, *::before, *::after {
+    box-sizing: border-box;
+  }
+
+  body {
+    background-color: #F8FAF7;
+    color: #17251D;
+    font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    margin: 0;
+    padding: 0;
+  }
+}
+
+/* Custom utility classes */
+.font-devanagari {
+  font-family: 'Noto Sans Devanagari', 'Inter', sans-serif;
+}
+
+/* Accessible focus ring */
+button:focus-visible, a:focus-visible, input:focus-visible {
+  outline: 2px solid #176B45;
+  outline-offset: 2px;
+}
