@@ -112,6 +112,30 @@ The application includes an embedded **Prototype Controller Hub** at the top of 
 
 ---
 
+### 🤖 Sprout AI — RAG-Powered Investing Assistant (Groq LLM)
+
+An intelligent, context-grounded AI assistant embedded directly in the bottom-right corner of the app:
+
+- **RAG Architecture (Retrieval-Augmented Generation)**:
+  - **Knowledge Corpus (`src/services/ragKnowledgeBase.ts`)**: Contains verified reference passages on SEBI guidelines, KYC PAN validation rules, DigiLocker UIDAI electronic consent, ₹100 micro-investing mechanics, and Sprout 2.0 app navigation.
+  - **Context Retriever (`src/services/ragEngine.ts`)**: Indexes and scores document chunks using token frequency, tag boosting, and exact phrase matching to retrieve the most relevant context for the user's question.
+  - **Context-Injected System Prompt**: Injects retrieved passages directly into the LLM context to eliminate hallucinations and enforce strict regulatory compliance.
+  - **Auditable Citations**: Reviewers can expand the **"Retrieved Context"** accordion under each AI message to see the exact knowledge documents and relevance scores injected into the prompt.
+
+- **Ultra-Fast LLM Inference via Groq**:
+  - Powered by **Llama 3.3 70B Versatile** (with automated fallback to Llama 3.1 8B Instant).
+  - Sub-second generation speeds on budget mobile devices.
+
+- **How to Connect Groq**:
+  1. **Option A (In-UI Key)**: Click the **⚙️ Key icon** in the Sprout AI chat header and paste your key (`gsk_...`). Stored securely in `localStorage`.
+  2. **Option B (`.env` file)**: Create a `.env` file in the project root with:
+     ```bash
+     VITE_GROQ_API_KEY=gsk_your_groq_api_key_here
+     ```
+  3. **Option C (Built-in Demo Mode)**: If no key is configured, the assistant provides verified answers directly synthesized from the local RAG knowledge base.
+
+---
+
 ## 🎨 Design System & Visual Tokens
 
 The interface uses a curated, high-contrast, nature-inspired palette engineered to look crisp on low-cost IPS LCD screens:

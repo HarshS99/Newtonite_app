@@ -9,6 +9,7 @@ import { Screen4KYC } from './components/Onboarding/Screen4KYC';
 import { Screen5Waiting } from './components/Onboarding/Screen5Waiting';
 import { DesignSystemView } from './components/DesignSystem/DesignSystemView';
 import { CaseStudyView } from './components/CaseStudy/CaseStudyView';
+import { SproutChatbot } from './components/Chatbot/SproutChatbot';
 import { useIsMobile } from './hooks/useIsMobile';
 import { Wifi, Battery, Signal } from 'lucide-react';
 import './App.css';
@@ -200,6 +201,9 @@ export function App() {
           </div>
         )}
       </main>
+
+      {/* 3. Sprout AI RAG Assistant with Groq */}
+      <SproutChatbot />
     </div>
   );
 }
