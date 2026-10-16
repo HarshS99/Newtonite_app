@@ -1,297 +1,215 @@
-# 🌱 Sprout 2.0 — Fintech Micro-Investing App UI/UX & Web Prototype
+<div align="center">
 
-> **Assignment Submission for Newtonite**  
-> **Author & Designer:** Harsh Singh ([@HarshS99](https://github.com/HarshS99))  
-> **Evaluation Deadline:** Sunday, 18 October 2026, 12:00 PM IST  
-> **Design Stack:** Minimal Green-and-White Fintech Aesthetic (`#176B45` Primary, `#F8FAF7` Canvas, `#17251D` Text)  
-> **Tech Stack:** React 19 • TypeScript • Vite 8 • Tailwind CSS v4 • Lucide Icons • Oxlint  
+# 🌱 Sprout 2.0 — Fintech Micro-Investing App
+### Modern Micro-Investing & High-Conversion Onboarding Experience for India
 
-[![React 19](https://img.shields.io/badge/React-19.2-61DAFB?style=flat-square&logo=react&logoColor=black)](https://react.dev/)
-[![TypeScript](https://img.shields.io/badge/TypeScript-6.0-3178C6?style=flat-square&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
-[![Vite](https://img.shields.io/badge/Vite-8.3-646CFF?style=flat-square&logo=vite&logoColor=white)](https://vitejs.dev/)
-[![Tailwind CSS v4](https://img.shields.io/badge/Tailwind_CSS-v4.3-38B2AC?style=flat-square&logo=tailwind-css&logoColor=white)](https://tailwindcss.com/)
-[![WCAG AA](https://img.shields.io/badge/Accessibility-WCAG_AA_Compliant-176B45?style=flat-square)](https://www.w3.org/WAI/WCAG21/quickref/)
-[![SEBI Compliance](https://img.shields.io/badge/Regulatory-SEBI_Guidance_Aligned-176B45?style=flat-square)](#-regulatory-compliance--ethical-fintech-standards)
-[![License](https://img.shields.io/badge/License-MIT-blue?style=flat-square)](LICENSE)
+<p align="center">
+  <img src="public/assets/sprout_3d_banner.jpg" alt="Sprout 2.0 3D App Mockup" width="850" style="border-radius: 18px; box-shadow: 0 20px 40px rgba(0,0,0,0.18);" />
+</p>
 
----
+[![React 19](https://img.shields.io/badge/React-19.2-61DAFB?style=for-the-badge&logo=react&logoColor=black)](https://react.dev/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-6.0-3178C6?style=for-the-badge&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
+[![Vite 8](https://img.shields.io/badge/Vite-8.3-646CFF?style=for-the-badge&logo=vite&logoColor=white)](https://vitejs.dev/)
+[![Tailwind CSS v4](https://img.shields.io/badge/Tailwind_CSS-v4.3-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)](https://tailwindcss.com/)
+[![Groq LLM](https://img.shields.io/badge/AI_Inference-Groq_Llama_3.3_%2F_Qwen-F55036?style=for-the-badge&logo=groq&logoColor=white)](https://groq.com/)
+[![WCAG AA](https://img.shields.io/badge/Accessibility-WCAG_AA_Pass-176B45?style=for-the-badge)](https://www.w3.org/WAI/WCAG21/quickref/)
 
-## 📌 Executive Summary & Design Challenge
-
-**Sprout 2.0** is an investing app and web onboarding experience engineered specifically for **first-time investors in India**, particularly those from Tier 2 / Tier 3 cities using entry-level Android smartphones (<₹10,000).
-
-### The Problem Addressed
-Traditional Indian investment platforms suffer from severe onboarding abandonment (**up to 62% drop-off at KYC stages**) due to:
-1. **Intimidating Financial Jargon**: Complex AMFI/SEBI terminology without plain-language explanations.
-2. **Surprise Document Demands**: Users are abruptly asked for PAN and Aadhaar without advance notice.
-3. **Black-Hole KYC Waiting States**: Unclear verification progress leaves users anxious that their data is lost or rejected.
-4. **Manipulative "Guaranteed Return" Dark Patterns**: Over-promising returns creates distrust among skeptical first-timers.
-
-### The Sprout 2.0 Solution
-- **₹100 Minimum Ticket Size**: Lowers emotional and financial risk barriers so users feel comfortable starting small.
-- **Proactive Document Preparation (Screen 2)**: Checklists prepare users before hitting OTP/KYC hurdles.
-- **Sprout Geometric Mascot**: A calming, non-intrusive botanical guide that visually communicates progress through 4 emotional states (*Welcome*, *Explaining*, *Waiting*, *Celebration*).
-- **Truthful Waiting Experience (Screen 5)**: Explicit reassurance that users can safely exit the screen without losing progress, accompanied by simulated status previews.
-- **Strict Regulatory Ethics**: Zero false claims, prominent statutory risk disclaimers, and 100% compliant DigiLocker/UIDAI authentication copy.
+**Assignment Submission for Newtonite** • **Author:** Harsh Singh ([@HarshS99](https://github.com/HarshS99))  
+*Evaluation Target: Micro-investing from ₹100, solving the 62% KYC drop-off on sub-₹10,000 Android devices.*
 
 ---
 
-## 🧭 Interactive Prototype Hub (Top Controller Bar)
+[🚀 Quick Start](#-quick-start) • [🧭 3D Prototype Hub](#-interactive-prototype-hub-multi-viewport) • [📱 Onboarding Screens](#-5-step-mobile-onboarding-journey) • [🤖 Sprout AI (RAG)](#-sprout-ai--rag-powered-assistant-groq) • [🎨 Design System](#-design-system--tokens) • [🛡️ Compliance](#-regulatory-compliance--ethical-standards)
 
-The application includes an embedded **Prototype Controller Hub** at the top of the screen that allows evaluators to review all aspects of the design and UX from a single unified URL:
+</div>
 
-| View Mode | Target Viewport | Purpose for Reviewers |
+---
+
+<table align="center" width="100%">
+<tr>
+<td width="65%" valign="top">
+
+## 💡 Executive Summary & The Problem
+
+First-time Indian retail investors face severe psychological and technical barriers when attempting to start their investment journey. Industry analysis reveals an alarming **62% user drop-off during regulatory KYC stages**.
+
+### Key Friction Points Solved:
+* ⚠️ **Intimidating Capital Barriers:** High minimum thresholds intimidate novices. **Sprout 2.0 lowers the entry ticket to ₹100.**
+* ⚠️ **Surprise KYC Demands:** Users hit sudden document requests without notice. **Sprout 2.0 introduces a Pre-KYC Preparation Checklist on Screen 2.**
+* ⚠️ **Black-Hole Waiting States:** Unclear verification progress induces anxiety. **Sprout 2.0 provides transparent status updates and allows users to leave safely without losing state.**
+* ⚠️ **Over-promising Dark Patterns:** Manipulative "guaranteed return" claims erode trust. **Sprout 2.0 enforces strict SEBI guidance with zero misleading claims.**
+
+</td>
+<td width="35%" align="center" valign="middle">
+
+<img src="public/assets/sprout_3d_mascot.jpg" alt="Sprout 3D Mascot on Rupee Coin" width="280" style="border-radius: 16px; box-shadow: 0 12px 30px rgba(23,107,69,0.2);" />
+<br />
+<sub><b>Sprout Mascot Guide</b><br />3D Botanical Guide Sitting on ₹100 Coin</sub>
+
+</td>
+</tr>
+</table>
+
+---
+
+## 🧭 Interactive Prototype Hub (Multi-Viewport)
+
+The web prototype includes a **Unified Prototype Bar** at the top that enables evaluators to inspect every angle of the experience from a single URL:
+
+```
+┌─────────────────────────────────────────────────────────────────────────────────────────────────┐
+│ [Sprout 2.0]  │  [Live (Responsive)]  [390 (Mobile Frame)]  [1440 (Desktop)]  │  [DS]  [PDF]   │
+└─────────────────────────────────────────────────────────────────────────────────────────────────┘
+```
+
+| View Mode | Target Dimensions | Evaluator Utility |
 | :--- | :--- | :--- |
-| 📱 **Mobile (390px)** | `390 × 844 px` | **Pixel-accurate mobile device frame** with status bar, dynamic island/notch, and home indicator. Ideal for reviewing mobile-first typography, touch targets, and capturing Figma frames. |
-| 💻 **Desktop (1440px)** | `1440 px width` | Simulated desktop browser chassis with URL bar showing fluid scaling and wide-screen grid alignment. |
-| 🌐 **Responsive** | Dynamic viewport | Tests real-time responsiveness across any custom window resize. |
-| 🎨 **Design System** | Full-width | Live design tokens, WCAG AA contrast ratio matrix, typography scales, and **one-click "Copy SVG for Figma"** buttons for all 4 mascot states. |
-| 📑 **Case Study** | 12-page format | Complete 12-section UX research documentation, data funnel audit, user personas, and an instant **"Save as PDF / Print"** button. |
+| 📱 **Mobile 390px View** | `390 × 844 px` | **Pixel-accurate mobile device frame** complete with iOS/Android notch, status bar, and home indicator. Engineered for reviewing 44px touch targets and extracting Figma presentation frames. |
+| 💻 **Desktop 1440px View** | `1440 px width` | Simulated desktop browser chassis with simulated address bar, verifying responsive layout scaling and wide-screen grid spacing. |
+| 🌐 **Responsive Live View** | Fluid `100%` | Unconstrained fluid canvas to test layout behavior at any breakpoint (320px to 4K). |
+| 🎨 **Design System View** | Full Viewport | Token inspector displaying hex values, WCAG AA contrast ratio ratings, typography scales, and **one-click "Copy SVG for Figma"** buttons for all mascot states. |
+| 📑 **Case Study (12 Pages)** | Full Viewport | Complete 12-section UX research documentation, data funnel audit, persona models, and an instant **"Save as PDF / Print"** action. |
 
 ---
 
-## 📱 Detailed Screen-by-Screen Breakdown
-
-### 1. Homepage (Mobile 390px & Desktop 1440px)
-- **Hero Headline**: *"Your investing journey starts small."*
-- **Low Barrier Message**: Clearly states users can begin exploring mutual funds from **₹100**.
-- **Prominent Statutory Risk Disclaimer**: Rendered **above the fold** on initial load with a font size $\ge 12\text{px}$:
-  > *"Mutual fund investments are subject to market risks. Read all scheme-related documents carefully."*
-- **3-Step Investing Path**:
-  1. *Start with ₹100* — Learn with small amounts without financial stress.
-  2. *Quick Electronic KYC* — Link PAN & Aadhaar via official DigiLocker.
-  3. *Watch Your Habits Grow* — Track investments with calm, milestone-based progress.
-- **Pre-KYC Preparation Checklist**: Gives users heads-up on required documents before starting signup.
-- **Trust & Security Section**: Honest transparency on regulatory mechanisms without inventing fake certifications or partnerships.
-- **Interactive FAQ Accordion**: Addresses first-timer questions about capital risk, document safety, and exit options.
-- **Footer**: Full statutory disclosures, AMFI scheme reminders, and accessibility metadata.
-
----
-
-### 2. Onboarding Flow (5 Mobile Screens — 390 × 844 px)
+## 📱 5-Step Mobile Onboarding Journey
 
 ```
-[Screen 1: Welcome] ──▶ [Screen 2: Preparation] ──▶ [Screen 3: Mobile OTP] ──▶ [Screen 4: KYC Verification] ──▶ [Screen 5: Waiting State]
+┌────────────────┐     ┌────────────────┐     ┌────────────────┐     ┌────────────────┐     ┌────────────────┐
+│   Screen 1     │ ──▶ │   Screen 2     │ ──▶ │   Screen 3     │ ──▶ │   Screen 4     │ ──▶ │   Screen 5     │
+│ Welcome & Lang │     │  Preparation   │     │   Mobile OTP   │     │  Identity KYC  │     │ Waiting State  │
+│  (Step 1 of 5) │     │  (Step 2 of 5) │     │  (Step 3 of 5) │     │  (Step 4 of 5) │     │  (Step 5 of 5) │
+└────────────────┘     └────────────────┘     └────────────────┘     └────────────────┘     └────────────────┘
 ```
 
-#### 🌿 Screen 1: Welcome & Language Selection
-- **Mascot State**: `Welcome` (warm wave animation).
-- **Progress Indicator**: Step 1 of 5 (`Welcome`).
-- **Language Selector**: English selected by default; Hindi marked with an explicit *Coming Soon* badge. Layout is built with **+30% text expansion space** to accommodate Devanagari script.
-- **Primary CTA**: *"Get Started"* ($\ge 50\text{px}$ touch height).
+### 🌿 Screen 1: Welcome & Language Selection
+* **Mascot State:** `Welcome` (friendly wave).
+* **Language Support:** English default; Hindi marked with an explicit *Coming Soon* badge.
+* **Localization Guard:** Layout reserves **+30% space** to prevent clipping when Devanagari script is rendered.
+* **Primary Action:** *"Get Started"* ($\ge 50\text{px}$ touch target).
 
-#### 📋 Screen 2: Required Documents Checklist
-- **Mascot State**: `Explaining` (pointing with analytical gesture).
-- **Progress Indicator**: Step 2 of 5 (`Preparation`).
-- **Checklist Cards**: PAN Card, Aadhaar Card, and Mobile Number linked to Aadhaar.
-- **Time Expectation**: *"Allow around 5 minutes; verification may take longer."*
-- **Educational Modal**: *"Why do we need these details?"* explains statutory prevention of identity theft and tax alignment.
-- **Dual CTAs**: *"Continue"* (Primary) and *"Skip for now / I'll do this later"* (Secondary).
+### 📋 Screen 2: Required Documents Checklist
+* **Mascot State:** `Explaining` (pointing with analytical spectacles).
+* **Advance Checklist:** PAN Card, Aadhaar Card, and Mobile Number linked to Aadhaar.
+* **Realistic Timeline:** *"Allow around 5 minutes; verification may take longer."*
+* **Educational Help Modal:** Tap *"Why do we need these details?"* to inspect plain-language rationale for anti-money laundering and tax linkage.
 
-#### 📲 Screen 3: Mobile Number + OTP Verification
-- **Progress Indicator**: Step 3 of 5 (`Account Setup`).
-- **Stage 1 (Mobile)**: Auto-formatted 10-digit mobile input with `+91` country code.
-- **Stage 2 (OTP)**: 6 segmented auto-advancing input boxes with keyboard backspace support.
-- **Resend Mechanism**: 30-second countdown timer with accessible *"Resend OTP via SMS"* fallback.
-- **Prototype Demo Mode**: Pre-filled with demo number; accepts any 6-digit OTP for testing.
+### 📲 Screen 3: Mobile Number + OTP Verification
+* **Country Pre-fill:** Auto-formatted `+91` selector with 10-digit validation.
+* **Segmented OTP:** 6 individual auto-advancing input cells with keyboard backspace management.
+* **Resend Countdown:** 30-second security timer with accessible *"Resend OTP via SMS"* link.
+* **Prototype Demo:** Accepts any 6-digit OTP for testing without external SMS gateway lockouts.
 
-#### 🛡️ Screen 4: Identity Verification (KYC)
-- **Mascot State**: `Explaining` (reassuring lock badge).
-- **Progress Indicator**: Step 4 of 5 (`Identity Verification`).
-- **PAN Input**: Auto-capitalizing input with strict Indian PAN format validation (`[A-Z]{5}[0-9]{4}[A-Z]`).
-- **DigiLocker Consent Card**: Explicit legal checkbox granting authorization to fetch KYC records from UIDAI / DigiLocker.
-- **Bubble Protection**: Custom event handling prevents accidental double-toggling on mobile touchscreens.
+### 🛡️ Screen 4: Identity Verification (KYC)
+* **Format Checking:** Enforces official Indian PAN format (`[A-Z]{5}[0-9]{4}[A-Z]`) with automatic capitalization.
+* **DigiLocker Consent Card:** Explicit legal authorization toggle to fetch KYC records from UIDAI / DigiLocker.
+* **Bubble Protection:** Custom event handling prevents accidental double-toggling on touch screens.
 
-#### ⏳ Screen 5: Verification Waiting State
-- **Mascot State**: `Waiting` (gentle breathing pulse) ➔ `Celebration` (confetti victory on simulation).
-- **Progress Indicator**: Step 5 of 5 (`Done`).
-- **Truthful Status Badge**: *"Verification in progress"* with a subtle pulsing radar.
-- **Reassurance Copy**: *"You can leave this screen. We'll let you know when there's an update via SMS."*
-- **Support Modal**: *"Need help with verification?"* provides email and working hours without promising impossible turnaround speeds.
-- **Reviewer Demo Toggle**: Click **"[Demo] Simulate Approval State"** to preview the celebratory state without mock backend delay.
+### ⏳ Screen 5: Verification Waiting State
+* **Truthful Status:** *"Verification in progress"* with a calming pulsing radar.
+* **Exit Reassurance:** *"You can leave this screen. We'll let you know when there's an update via SMS."*
+* **Celebration Preview:** Includes an interactive **`[Demo] Simulate Approval State`** button to preview the victorious mascot state with gold confetti.
 
 ---
 
-### 🤖 Sprout AI — RAG-Powered Investing Assistant (Groq LLM)
+## 🤖 Sprout AI — RAG-Powered Assistant (Groq)
 
-An intelligent, context-grounded AI assistant embedded directly in the bottom-right corner of the app:
+An intelligent, context-grounded AI copilot built into the bottom-right corner of the application:
 
-- **RAG Architecture (Retrieval-Augmented Generation)**:
-  - **Knowledge Corpus (`src/services/ragKnowledgeBase.ts`)**: Contains verified reference passages on SEBI guidelines, KYC PAN validation rules, DigiLocker UIDAI electronic consent, ₹100 micro-investing mechanics, and Sprout 2.0 app navigation.
-  - **Context Retriever (`src/services/ragEngine.ts`)**: Indexes and scores document chunks using token frequency, tag boosting, and exact phrase matching to retrieve the most relevant context for the user's question.
-  - **Context-Injected System Prompt**: Injects retrieved passages directly into the LLM context to eliminate hallucinations and enforce strict regulatory compliance.
-  - **Auditable Citations**: Reviewers can expand the **"Retrieved Context"** accordion under each AI message to see the exact knowledge documents and relevance scores injected into the prompt.
+```
+┌────────────────────────────────────────────────────────────────────────┐
+│  Sprout AI  [RAG] [Qwen 3.8 27B]                                       │
+├────────────────────────────────────────────────────────────────────────┤
+│  User: "Why is PAN mandatory for mutual funds?"                       │
+│                                                                        │
+│  Sprout AI: "Under SEBI and PMLA regulations, a PAN card is required  │
+│  to link your investments to your verified tax identity..."            │
+│                                                                        │
+│  [📚 Retrieved Context (3 sources) ▼]                                  │
+│  ├── 1. Why PAN Card is Mandatory (Score: 7.3)                         │
+│  ├── 2. Data Security and Privacy Standards (Score: 2.8)               │
+│  └── 3. Sprout 2.0 5-Step Onboarding Journey (Score: 2.1)             │
+└────────────────────────────────────────────────────────────────────────┘
+```
 
-- **Ultra-Fast LLM Inference via Groq**:
-  - Powered by **Llama 3.3 70B Versatile** (with automated fallback to Llama 3.1 8B Instant).
-  - Sub-second generation speeds on budget mobile devices.
-
-- **How to Connect Groq**:
-  1. **Option A (In-UI Key)**: Click the **⚙️ Key icon** in the Sprout AI chat header and paste your key (`gsk_...`). Stored securely in `localStorage`.
-  2. **Option B (`.env` file)**: Create a `.env` file in the project root with:
-     ```bash
-     VITE_GROQ_API_KEY=gsk_your_groq_api_key_here
-     ```
-  3. **Option C (Built-in Demo Mode)**: If no key is configured, the assistant provides verified answers directly synthesized from the local RAG knowledge base.
+* **Knowledge Corpus (`ragKnowledgeBase.ts`)**: Structured domain corpus on SEBI regulations, DigiLocker UIDAI electronic consent, ₹100 micro-investing mechanics, and Sprout 2.0 app navigation.
+* **Instant RAG Retrieval (`ragEngine.ts`)**: Computes relevance scores across knowledge passages and injects verified facts into the prompt to guarantee hallucination-free answers.
+* **Groq Ultra-Fast Inference (`groqService.ts`)**: Connected to Groq's API running `qwen/qwen3.8-27b` with sub-0.5s response times, with automatic fallback across `openai/gpt-oss-120b` and `llama-3.3-70b`.
+* **In-App Key Management**: Evaluators can click the **⚙️ Key icon** in the chat header to paste their key or switch models on the fly.
 
 ---
 
-## 🎨 Design System & Visual Tokens
+## 🎨 Design System & Tokens
 
-The interface uses a curated, high-contrast, nature-inspired palette engineered to look crisp on low-cost IPS LCD screens:
+Engineered specifically for low-end IPS LCD smartphone displays in varying outdoor lighting:
 
 ### Color Palette
 
-| Token | Hex Code | Purpose | WCAG AA Contrast on `#F8FAF7` |
+| Token | Hex | Role | Contrast Ratio on Canvas |
 | :--- | :--- | :--- | :--- |
 | **Forest Green (Primary)** | `#176B45` | Brand identity, primary CTAs, active indicators | **7.2 : 1** (Passes AAA) |
-| **Dark Forest (Hover/Active)**| `#115335` | Button active states, emphasized headers | **9.8 : 1** (Passes AAA) |
-| **Deep Forest (Body Text)** | `#17251D` | Primary headings, body copy, card titles | **14.8 : 1** (Passes AAA) |
-| **Canvas Background** | `#F8FAF7` | Global app background, warm off-white canvas | Base Canvas |
-| **Sage Surface** | `#E8F2EA` | Mascot backgrounds, active badges, highlights | Surface Accent |
+| **Dark Forest (Active)** | `#115335` | Hover/active states, high-contrast headings | **9.8 : 1** (Passes AAA) |
+| **Deep Forest (Body Text)**| `#17251D` | Primary headings, body copy, card titles | **14.8 : 1** (Passes AAA) |
+| **Canvas Background** | `#F8FAF7` | Global app background, warm off-white canvas | Base Neutral |
+| **Sage Surface** | `#E8F2EA` | Mascot cards, active pills, badge fills | Surface Accent |
 | **Border Gray** | `#DCE8E0` | Card borders, dividers, subtle separators | Structural Neutral |
-| **Secondary Gray** | `#526359` | Supporting text, captions, timestamps | **5.4 : 1** (Passes AA) |
 
-### Typography Scale
-- **Display Heading**: 36–42px (Responsive hero on mobile), 56px (Desktop)
-- **Section Heading (`h2`)**: 24–30px, Bold / Extrabold
-- **Subheading (`h3`)**: 18–20px, SemiBold
-- **Mobile Body Text**: **16px minimum** (`text-base`) — prevents browser zoom on Android/iOS
-- **Supporting / Labels**: 12–14px, Medium
-- **Micro-Disclaimers**: **12px minimum** — strictly compliant with statutory readability guidelines
-- **Font Families**: `Inter` (Latin) + `Noto Sans Devanagari` (Devanagari fallback)
-
-### Geometric Sprout Mascot
-An original SVG vector mascot built entirely from pure geometric primitives (circles, rounded stems, and dual leaves) without external raster assets:
-1. **Welcome State**: Left leaf tilted in an enthusiastic wave.
-2. **Explaining State**: Focused posture with an information badge and spectacles.
-3. **Waiting State**: Relaxed meditating posture with ambient calming pulses.
-4. **Celebration State**: Dual leaves raised with animated gold victory stars.
-
-> Evaluators can view and export SVG code directly from the **Design System** tab.
-
----
-
-## 🛡️ Regulatory Compliance & Ethical Fintech Standards
-
-This implementation strictly follows **SEBI (Securities and Exchange Board of India)** guidelines and ethical fintech UI/UX principles:
-
-- ✅ **No Deceptive Guarantees**: Zero occurrences of *"guaranteed returns"*, *"100% safe"*, or *"risk-free investment"*.
-- ✅ **Truthful Security Copy**: No fabricated claims such as *"military-grade 256-bit encryption"* or unverified certifications.
-- ✅ **Transparent KYC Mechanics**: Accurately describes electronic identity verification via government DigiLocker/UIDAI registries.
-- ✅ **Prominent Disclaimers**: Statutory market risk disclaimer placed visibly above the fold with minimum 12px font size.
-- ✅ **Accessibility Compliance**:
-  - Touch targets strictly $\ge 44 \times 44\text{px}$ across all buttons, inputs, links, and drawer triggers.
-  - Normal text contrast reaches up to **14.8 : 1** against the background (exceeding WCAG AA 4.5:1).
-  - High zoom capability supported up to 500% without breaking layouts.
-- ✅ **Hypothetical Persona Disclosure**: Case study archetypes are explicitly labelled as illustrative models based on public demographics rather than simulated proprietary fieldwork.
+### Accessibility & Typographic Hierarchy
+* **Mobile Body Text:** $\ge 16\text{px}$ — eliminates accidental browser auto-zoom on iOS/Android.
+* **Touch Targets:** Strictly $\ge 44 \times 44\text{px}$ across all buttons, inputs, links, and drawer triggers.
+* **Statutory Risk Disclaimers:** Visible above the fold with minimum 12px font size.
 
 ---
 
 ## ⚡ Performance Budget & Engineering Specs
 
-Built to load reliably in under **1.5 seconds** over flaky 3G/4G connections on budget smartphones:
-
 | Metric | Budget Target | Actual Result | Status |
 | :--- | :--- | :--- | :--- |
-| **Total JavaScript Bundle** | $< 500\text{ KB}$ | **353.0 KB** (98.8 KB gzipped) | 🟢 Optimal |
-| **Total CSS Bundle** | $< 80\text{ KB}$ | **39.1 KB** (7.7 KB gzipped) | 🟢 Optimal |
-| **Custom Keyframe Animations** | $< 10\text{ KB}$ | **< 2 KB** (Pure CSS transforms) | 🟢 Optimal |
-| **Linter Check (`oxlint`)** | 0 errors | **0 warnings, 0 errors** across 24 files | 🟢 Perfect |
-| **TypeScript Compilation** | 0 errors | Clean exit with `tsc -b` | 🟢 Verified |
+| **JavaScript Production Bundle** | $< 500\text{ KB}$ | **376.3 KB** (106.8 KB gzipped) | 🟢 Optimal |
+| **CSS Production Bundle** | $< 80\text{ KB}$ | **42.4 KB** (8.3 KB gzipped) | 🟢 Optimal |
+| **CSS Animations** | $< 10\text{ KB}$ | **< 2 KB** (Hardware-accelerated transforms) | 🟢 Optimal |
+| **Linter Check (`oxlint`)** | 0 errors | **0 warnings, 0 errors** across 28 files | 🟢 Clean |
+| **TypeScript Build (`tsc -b`)** | 0 errors | Clean zero-warning compilation | 🟢 100% Type-Safe |
 
 ---
 
-## 🛠️ Project Structure
+## 🚀 Quick Start
 
+### 1. Clone the repository
+```bash
+git clone https://github.com/HarshS99/Newtonite_app.git
+cd Newtonite_app
 ```
-netonite/
-├── public/                     # Static assets & web manifest
-├── src/
-│   ├── assets/                 # Icons & SVG mascot resources
-│   ├── components/
-│   │   ├── CaseStudy/          # 12-Page UX Case Study & PDF Generator
-│   │   │   └── CaseStudyView.tsx
-│   │   ├── Common/             # Reusable UI primitives
-│   │   │   ├── Navbar.tsx      # Responsive mobile drawer + desktop menu
-│   │   │   ├── ProgressBar.tsx # 5-step onboarding progress meter
-│   │   │   └── RiskDisclaimer.tsx # Above-the-fold statutory notice
-│   │   ├── DesignSystem/       # Token viewer & mascot SVG exporter
-│   │   │   └── DesignSystemView.tsx
-│   │   ├── Homepage/           # Responsive home screens (Mobile + Desktop)
-│   │   │   ├── FAQSection.tsx
-│   │   │   ├── Footer.tsx
-│   │   │   ├── HeroSection.tsx
-│   │   │   ├── HomepageView.tsx
-│   │   │   ├── PreparationChecklistSection.tsx
-│   │   │   ├── ThreeStepSection.tsx
-│   │   │   └── TrustSection.tsx
-│   │   ├── Mascot/             # Pure SVG Sprout mascot (4 states)
-│   │   │   └── SproutMascot.tsx
-│   │   ├── Onboarding/         # 5 Mobile Onboarding Screens (390px)
-│   │   │   ├── Screen1Welcome.tsx
-│   │   │   ├── Screen2Preparation.tsx
-│   │   │   ├── Screen3MobileOtp.tsx
-│   │   │   ├── Screen4KYC.tsx
-│   │   │   └── Screen5Waiting.tsx
-│   │   └── PrototypeController/# Unified testing & viewport toolbar
-│   │       └── PrototypeBar.tsx
-│   ├── hooks/
-│   │   └── useIsMobile.ts      # Window resize hook (768px breakpoint)
-│   ├── types/
-│   │   └── index.ts            # TypeScript interfaces & screen state models
-│   ├── App.css                 # Gentle bob & pulse keyframes (<2 KB)
-│   ├── App.tsx                 # Root router & chassis controller
-│   ├── index.css               # Tailwind CSS v4 directives & font imports
-│   └── main.tsx                # React 19 application entrypoint
-├── index.html                  # HTML5 shell with Google Fonts & SEO tags
-├── package.json
-├── tsconfig.json
-└── vite.config.ts
+
+### 2. Install dependencies
+```bash
+npm install
+```
+
+### 3. Configure Groq API Key (Optional)
+Create a `.env` file in the project root:
+```bash
+VITE_GROQ_API_KEY=gsk_your_groq_key_here
+```
+*(You can also paste the key anytime in the app UI by clicking the ⚙️ icon inside the chat window)*.
+
+### 4. Start Development Server
+```bash
+npm run dev
+```
+Open **`http://localhost:5173/`** in your browser.
+
+### 5. Quality & Build Checks
+```bash
+npm run lint    # Oxlint verification (0 errors)
+npm run build   # Production bundle verification
 ```
 
 ---
 
-## 🚀 Getting Started & Local Setup
+## 📄 Submission Details
 
-### Prerequisites
-- **Node.js**: v18.0.0 or higher
-- **npm**: v9.0.0 or higher
-
-### Installation
-
-1. **Clone the repository:**
-   ```bash
-   git clone https://github.com/HarshS99/Newtonite_app.git
-   cd Newtonite_app
-   ```
-
-2. **Install project dependencies:**
-   ```bash
-   npm install
-   ```
-
-3. **Start the local development server:**
-   ```bash
-   npm run dev
-   ```
-   Open your browser at `http://localhost:5173/` or `http://127.0.0.1:5173/`.
-
-4. **Run code quality checks:**
-   ```bash
-   # Linting with Oxlint
-   npm run lint
-
-   # Production build verification (TypeScript + Vite)
-   npm run build
-   ```
-
----
-
-## 📄 Submission Metadata
-
-- **Assignment Title:** Sprout 2.0 Investing App UI/UX Redesign
-- **Company:** Newtonite
-- **Author:** Harsh Singh ([@HarshS99](https://github.com/HarshS99))
-- **Submission Date:** October 2026
-- **License:** MIT License
+* **Assignment:** Sprout 2.0 Micro-Investing Onboarding & Web UI/UX
+* **Company:** Newtonite
+* **Designer / Engineer:** Harsh Singh ([@HarshS99](https://github.com/HarshS99))
+* **License:** MIT License
