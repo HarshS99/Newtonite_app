@@ -10,8 +10,17 @@ export interface ChatMessage {
 }
 
 const STORAGE_KEY = 'sprout_groq_api_key';
-const DEFAULT_MODEL = 'llama-3.3-70b-versatile';
-const FALLBACK_MODEL = 'llama-3.1-8b-instant';
+const MODEL_STORAGE_KEY = 'sprout_groq_model';
+
+export const SUPPORTED_MODELS = [
+  { id: 'qwen/qwen3.8-27b', label: 'Qwen 3.8 27B (Ultra-fast, Recommended)' },
+  { id: 'openai/gpt-oss-120b', label: 'GPT-OSS 120B (Deep Reasoning)' },
+  { id: 'openai/gpt-oss-20b', label: 'GPT-OSS 20B (Balanced)' },
+  { id: 'llama-3.3-70b-versatile', label: 'Llama 3.3 70B' },
+  { id: 'llama-3.1-8b-instant', label: 'Llama 3.1 8B' },
+];
+
+export const DEFAULT_MODEL = 'qwen/qwen3.8-27b';
 
 /**
  * Retrieve the active Groq API Key
@@ -40,12 +49,26 @@ export function setGroqApiKey(key: string): void {
 }
 
 /**
+ * Get the currently selected Groq model
+ */
+export function getGroqModel(): string {
+  return localStorage.getItem(MODEL_STORAGE_KEY) || DEFAULT_MODEL;
+}
+
+/**
+ * Save selected Groq model
+ */
+export function setGroqModel(modelId: string): void {
+  localStorage.setItem(MODEL_STORAGE_KEY, modelId);
+}
+
+/**
  * Send query to Groq LLM with RAG-retrieved context
  */
 export async function sendQueryToGroqRAG(
   query: string,
   history: { role: 'user' | 'assistant'; content: string }[] = []
-): Promise<{ text: string; sources: RetrievedChunk[] }> {
+): Promise<{ text: string; sources: RetrievedChunk[]; modelUsed?: string }> {
   // 1. Retrieve knowledge base context for this query
   const retrievedSources = retrieveContext(query, 3);
   const systemPrompt = buildRagSystemPrompt(retrievedSources);
@@ -61,93 +84,81 @@ export async function sendQueryToGroqRAG(
     };
   }
 
-  // 2. Call Groq OpenAI-compatible Chat Completions endpoint
-  try {
-    const messages = [
-      { role: 'system', content: systemPrompt },
-      ...history.slice(-4), // Last 4 turns for context
-      { role: 'user', content: query },
-    ];
+  // 2. Prepare conversation messages
+  const messages = [
+    { role: 'system', content: systemPrompt },
+    ...history.slice(-4), // Last 4 turns for context
+    { role: 'user', content: query },
+  ];
 
-    const response = await fetch('https://api.groq.com/openai/v1/chat/completions', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${apiKey}`,
-      },
-      body: JSON.stringify({
-        model: DEFAULT_MODEL,
-        messages,
-        temperature: 0.3,
-        max_tokens: 500,
-      }),
-    });
+  const primaryModel = getGroqModel();
+  const modelsToTry = Array.from(
+    new Set([primaryModel, DEFAULT_MODEL, 'openai/gpt-oss-120b', 'openai/gpt-oss-20b'])
+  );
 
-    if (!response.ok) {
-      if (response.status === 401) {
-        throw new Error(
-          'Invalid Groq API Key. Please verify your key at console.groq.com and re-enter it.'
-        );
+  let lastError: Error | null = null;
+
+  for (const model of modelsToTry) {
+    try {
+      const response = await fetch('https://api.groq.com/openai/v1/chat/completions', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${apiKey}`,
+        },
+        body: JSON.stringify({
+          model,
+          messages,
+          temperature: 0.3,
+          max_tokens: 500,
+        }),
+      });
+
+      if (!response.ok) {
+        if (response.status === 401) {
+          throw new Error(
+            'Invalid Groq API Key. Please verify your key at console.groq.com and re-enter it.'
+          );
+        }
+
+        const errorData = await response.json().catch(() => null);
+        const errMsg = errorData?.error?.message || `HTTP ${response.status}`;
+
+        // If model does not exist or no access, try next model in fallback list
+        if (response.status === 404 || errMsg.toLowerCase().includes('model')) {
+          console.warn(`Model ${model} not accessible (${errMsg}), trying next candidate...`);
+          lastError = new Error(errMsg);
+          continue;
+        }
+
+        throw new Error(errMsg);
       }
-      if (response.status === 429) {
-        // Fallback to lighter model if rate limited
-        return await fallbackToLighterModel(apiKey, messages, retrievedSources);
+
+      const data = await response.json();
+      const choice = data.choices?.[0];
+      const replyText =
+        choice?.message?.content?.trim() ||
+        (choice?.message?.reasoning ? 'Thinking completed.' : 'Response received.');
+
+      // Save the model that actually succeeded
+      setGroqModel(model);
+
+      return {
+        text: replyText,
+        sources: retrievedSources,
+        modelUsed: model,
+      };
+    } catch (err: any) {
+      if (err.message.includes('Invalid Groq API Key')) {
+        throw err;
       }
-      const errorData = await response.json().catch(() => null);
-      throw new Error(
-        errorData?.error?.message || `Groq API returned HTTP ${response.status}`
-      );
+      lastError = err;
     }
-
-    const data = await response.json();
-    const replyText =
-      data.choices?.[0]?.message?.content?.trim() ||
-      'I reviewed your question, but could not produce a response. Please reach out to support@sproutapp.in.';
-
-    return {
-      text: replyText,
-      sources: retrievedSources,
-    };
-  } catch (error: any) {
-    console.error('Groq API Error:', error);
-    // If network error or bad key, return clear guidance
-    return {
-      text: `⚠️ **Could not connect to Groq LLM**: ${error.message}\n\n*Note:* You can update your Groq API key by clicking the ⚙️ Settings icon in the chat header, or add \`VITE_GROQ_API_KEY=your_key\` to your \`.env\` file.`,
-      sources: retrievedSources,
-    };
-  }
-}
-
-/**
- * Fallback to faster 8B model if 70B is rate-limited
- */
-async function fallbackToLighterModel(
-  apiKey: string,
-  messages: any[],
-  sources: RetrievedChunk[]
-): Promise<{ text: string; sources: RetrievedChunk[] }> {
-  const response = await fetch('https://api.groq.com/openai/v1/chat/completions', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${apiKey}`,
-    },
-    body: JSON.stringify({
-      model: FALLBACK_MODEL,
-      messages,
-      temperature: 0.3,
-      max_tokens: 450,
-    }),
-  });
-
-  if (!response.ok) {
-    throw new Error('Groq rate limit reached on both 70B and 8B models. Please try again shortly.');
   }
 
-  const data = await response.json();
   return {
-    text: data.choices?.[0]?.message?.content?.trim() || 'Response received.',
-    sources,
+    text: `⚠️ **Could not connect to Groq LLM**: ${lastError?.message || 'All candidate models failed'}\n\n*Note:* You can update your Groq API key by clicking the ⚙️ Settings icon in the chat header, or add \`VITE_GROQ_API_KEY=your_key\` to your \`.env\` file.`,
+    sources: retrievedSources,
   };
 }
 
@@ -164,5 +175,5 @@ function generateOfflineRagResponse(query: string, sources: RetrievedChunk[]): s
 
 ${topDoc.content.slice(0, 320)}...
 
-*(💡 Live AI responses powered by Groq Llama 3.3. Click the ⚙️ Key icon above to paste your Groq API key or add it to \`.env\` to enable real-time LLM chat generation.)*`;
+*(💡 Live AI responses powered by Groq. Click the ⚙️ Key icon above to paste your Groq API key or add it to \`.env\` to enable real-time LLM chat generation.)*`;
 }

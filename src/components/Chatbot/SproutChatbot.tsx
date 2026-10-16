@@ -16,6 +16,9 @@ import {
   sendQueryToGroqRAG,
   getGroqApiKey,
   setGroqApiKey,
+  getGroqModel,
+  setGroqModel,
+  SUPPORTED_MODELS,
   type ChatMessage,
 } from '../../services/groqService';
 import { SproutMascot } from '../Mascot/SproutMascot';
@@ -49,7 +52,7 @@ function createMessage(
 const INITIAL_MESSAGE: ChatMessage = {
   id: 'welcome-initial',
   sender: 'assistant',
-  text: "👋 Hi! I'm Sprout AI, your micro-investing guide powered by **RAG (Knowledge Retrieval) + Groq LLM**.\n\nAsk me anything about starting with ₹100, PAN/Aadhaar DigiLocker verification, or statutory safety rules!",
+  text: "👋 Hi! I'm Sprout AI, your micro-investing guide powered by **RAG (Knowledge Retrieval) + Groq**.\n\nAsk me anything about starting with ₹100, PAN/Aadhaar DigiLocker verification, or statutory safety rules!",
   timeString: 'Just now',
 };
 
@@ -57,6 +60,7 @@ export const SproutChatbot: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [showSettings, setShowSettings] = useState(false);
   const [inputKey, setInputKey] = useState<string>(() => getGroqApiKey());
+  const [selectedModel, setSelectedModel] = useState<string>(() => getGroqModel());
 
   const hasApiKey = Boolean(inputKey.trim());
 
@@ -73,9 +77,10 @@ export const SproutChatbot: React.FC = () => {
     }
   }, [messages, isOpen]);
 
-  const handleSaveKey = (e: React.FormEvent) => {
+  const handleSaveSettings = (e: React.FormEvent) => {
     e.preventDefault();
     setGroqApiKey(inputKey);
+    setGroqModel(selectedModel);
     setShowSettings(false);
   };
 
@@ -99,6 +104,9 @@ export const SproutChatbot: React.FC = () => {
 
     try {
       const response = await sendQueryToGroqRAG(query, history);
+      if (response.modelUsed && response.modelUsed !== selectedModel) {
+        setSelectedModel(response.modelUsed);
+      }
       const assistantMsg = createMessage('assistant', response.text, response.sources);
       setMessages((prev) => [...prev, assistantMsg]);
     } catch (err: any) {
@@ -129,6 +137,10 @@ export const SproutChatbot: React.FC = () => {
       ),
     ]);
   };
+
+  const currentModelLabel =
+    SUPPORTED_MODELS.find((m) => m.id === selectedModel)?.label.split('(')[0].trim() ||
+    selectedModel;
 
   return (
     <>
@@ -166,7 +178,7 @@ export const SproutChatbot: React.FC = () => {
                   <span className="text-[9px] font-bold px-1.5 py-0.2 rounded bg-[#176B45] text-white">
                     RAG
                   </span>
-                  <span className="text-[9px] font-medium text-[#86E4B1]">Groq Llama 3.3</span>
+                  <span className="text-[9px] font-medium text-[#86E4B1]">{currentModelLabel}</span>
                 </div>
                 <p className="text-[10px] text-[#A0B5A8]">Grounded in SEBI & Sprout Knowledge Base</p>
               </div>
@@ -175,7 +187,7 @@ export const SproutChatbot: React.FC = () => {
             <div className="flex items-center gap-1">
               <button
                 onClick={() => setShowSettings(!showSettings)}
-                title="Configure Groq API Key"
+                title="Configure Groq API Key & Model"
                 className={`w-8 h-8 rounded-lg flex items-center justify-center transition-all cursor-pointer ${
                   hasApiKey
                     ? 'text-[#44B77F] hover:bg-[#25392D]'
@@ -209,40 +221,62 @@ export const SproutChatbot: React.FC = () => {
               <div className="flex items-center justify-between">
                 <span className="font-bold text-[#17251D] flex items-center gap-1.5">
                   <Key className="w-3.5 h-3.5 text-[#176B45]" />
-                  Groq API Key Setup
+                  Groq LLM Configuration
                 </span>
                 <span className={`text-[10px] font-semibold px-2 py-0.5 rounded-full ${
                   hasApiKey ? 'bg-[#E8F2EA] text-[#176B45]' : 'bg-[#FFF3D6] text-[#8C6200]'
                 }`}>
-                  {hasApiKey ? 'Active' : 'Missing'}
+                  {hasApiKey ? 'Key Active' : 'Missing Key'}
                 </span>
               </div>
 
-              <p className="text-[11px] text-[#526359] leading-tight">
-                Enter your Groq key to enable ultra-fast Llama 3.3 inference with RAG. You can get a free key from{' '}
-                <a
-                  href="https://console.groq.com/keys"
-                  target="_blank"
-                  rel="noreferrer"
-                  className="text-[#176B45] underline font-semibold inline-flex items-center gap-0.5"
-                >
-                  console.groq.com <ExternalLink className="w-2.5 h-2.5" />
-                </a>
-              </p>
+              <form onSubmit={handleSaveSettings} className="space-y-2">
+                <div>
+                  <label className="text-[10px] font-bold text-[#4B5E53] uppercase tracking-wider block mb-1">
+                    Groq API Key
+                  </label>
+                  <input
+                    type="password"
+                    placeholder="gsk_..."
+                    value={inputKey}
+                    onChange={(e) => setInputKey(e.target.value)}
+                    className="w-full px-3 py-1.5 rounded-lg border border-[#CFE1D6] bg-white text-xs text-[#17251D] outline-none focus:border-[#176B45] font-mono"
+                  />
+                  <p className="text-[10px] text-[#526359] mt-0.5">
+                    Free keys at{' '}
+                    <a
+                      href="https://console.groq.com/keys"
+                      target="_blank"
+                      rel="noreferrer"
+                      className="text-[#176B45] underline font-semibold inline-flex items-center gap-0.5"
+                    >
+                      console.groq.com <ExternalLink className="w-2.5 h-2.5" />
+                    </a>
+                  </p>
+                </div>
 
-              <form onSubmit={handleSaveKey} className="flex gap-1.5">
-                <input
-                  type="password"
-                  placeholder="gsk_..."
-                  value={inputKey}
-                  onChange={(e) => setInputKey(e.target.value)}
-                  className="flex-1 px-3 py-1.5 rounded-lg border border-[#CFE1D6] bg-white text-xs text-[#17251D] outline-none focus:border-[#176B45] font-mono"
-                />
+                <div>
+                  <label className="text-[10px] font-bold text-[#4B5E53] uppercase tracking-wider block mb-1">
+                    Model Selection
+                  </label>
+                  <select
+                    value={selectedModel}
+                    onChange={(e) => setSelectedModel(e.target.value)}
+                    className="w-full px-2.5 py-1.5 rounded-lg border border-[#CFE1D6] bg-white text-xs text-[#17251D] outline-none focus:border-[#176B45]"
+                  >
+                    {SUPPORTED_MODELS.map((m) => (
+                      <option key={m.id} value={m.id}>
+                        {m.label}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+
                 <button
                   type="submit"
-                  className="px-3 py-1.5 bg-[#176B45] text-white font-bold rounded-lg hover:bg-[#115335] text-xs transition-colors cursor-pointer"
+                  className="w-full py-1.5 bg-[#176B45] text-white font-bold rounded-lg hover:bg-[#115335] text-xs transition-colors cursor-pointer"
                 >
-                  Save
+                  Save Configuration
                 </button>
               </form>
             </div>
@@ -382,7 +416,7 @@ export const SproutChatbot: React.FC = () => {
                 <ShieldCheck className="w-2.5 h-2.5 text-[#176B45]" />
                 SEBI compliance grounded
               </span>
-              <span>Groq Llama 3.3 70B</span>
+              <span>Groq Powered</span>
             </div>
           </div>
         </div>
