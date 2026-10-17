@@ -1,4 +1,5 @@
 import React from 'react';
+import { smoothScrollToSection } from '../../utils/scroll';
 
 interface FooterProps {
   isMobile?: boolean;
@@ -11,15 +12,21 @@ export const Footer: React.FC<FooterProps> = ({ isMobile = false }) => {
         <div className={`grid gap-6 mb-8 pb-8 border-b border-[#244230] ${isMobile ? 'grid-cols-1' : 'grid-cols-1 md:grid-cols-12'}`}>
           {/* Brand Col */}
           <div className={`space-y-3 ${isMobile ? 'w-full' : 'md:col-span-5'}`}>
-            <div className="flex items-center gap-2">
-              <div className="w-8 h-8 rounded-lg bg-[#176B45] flex items-center justify-center">
+            <div 
+              onClick={() => smoothScrollToSection('top', { duration: 900, offset: 0 })}
+              className="flex items-center gap-2 cursor-pointer group w-fit"
+              role="button"
+              tabIndex={0}
+              aria-label="Back to top"
+            >
+              <div className="w-8 h-8 rounded-lg bg-[#176B45] group-hover:bg-[#115335] transition-colors flex items-center justify-center">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <path d="M12 22V13" stroke="white" strokeWidth="2.2" strokeLinecap="round" />
                   <path d="M12 16C12 11 7 10 6 13C6 17 11 17 12 17" stroke="white" strokeWidth="2.2" strokeLinecap="round" />
                   <path d="M12 13C12 8 17 7 18 10C18 14 13 14 12 14" stroke="white" strokeWidth="2.2" strokeLinecap="round" />
                 </svg>
               </div>
-              <span className="font-extrabold text-lg text-white">Sprout 2.0</span>
+              <span className="font-extrabold text-lg text-white group-hover:text-[#44B77F] transition-colors">Sprout 2.0</span>
             </div>
             <p className="text-xs text-[#9BB5A7] leading-relaxed max-w-sm">
               Empowering first-time investors in India to start micro-investing from ₹100. Built for low-bandwidth mobile environments with complete regulatory transparency.
@@ -30,9 +37,42 @@ export const Footer: React.FC<FooterProps> = ({ isMobile = false }) => {
           <div className="md:col-span-2 space-y-2">
             <h4 className="text-xs font-bold text-white uppercase tracking-wider">Product</h4>
             <ul className="space-y-1.5 text-xs text-[#9BB5A7]">
-              <li><a href="#how-it-works" className="hover:text-white transition-colors">How It Works</a></li>
-              <li><a href="#documents" className="hover:text-white transition-colors">KYC Checklist</a></li>
-              <li><a href="#trust" className="hover:text-white transition-colors">Security & Trust</a></li>
+              <li>
+                <a 
+                  href="#how-it-works" 
+                  onClick={(e) => {
+                    e.preventDefault();
+                    smoothScrollToSection('how-it-works', { duration: 1000, offset: 72 });
+                  }}
+                  className="hover:text-white transition-colors cursor-pointer"
+                >
+                  How It Works
+                </a>
+              </li>
+              <li>
+                <a 
+                  href="#documents" 
+                  onClick={(e) => {
+                    e.preventDefault();
+                    smoothScrollToSection('documents', { duration: 1000, offset: 72 });
+                  }}
+                  className="hover:text-white transition-colors cursor-pointer"
+                >
+                  KYC Checklist
+                </a>
+              </li>
+              <li>
+                <a 
+                  href="#trust" 
+                  onClick={(e) => {
+                    e.preventDefault();
+                    smoothScrollToSection('trust', { duration: 1000, offset: 72 });
+                  }}
+                  className="hover:text-white transition-colors cursor-pointer"
+                >
+                  Security & Trust
+                </a>
+              </li>
             </ul>
           </div>
 
@@ -40,7 +80,18 @@ export const Footer: React.FC<FooterProps> = ({ isMobile = false }) => {
           <div className="md:col-span-2 space-y-2">
             <h4 className="text-xs font-bold text-white uppercase tracking-wider">Support</h4>
             <ul className="space-y-1.5 text-xs text-[#9BB5A7]">
-              <li><a href="#faq" className="hover:text-white transition-colors">Help Center / FAQ</a></li>
+              <li>
+                <a 
+                  href="#faq" 
+                  onClick={(e) => {
+                    e.preventDefault();
+                    smoothScrollToSection('faq', { duration: 1000, offset: 72 });
+                  }}
+                  className="hover:text-white transition-colors cursor-pointer"
+                >
+                  Help Center / FAQ
+                </a>
+              </li>
               <li><a href="#" className="hover:text-white transition-colors">Help & Guidance</a></li>
               <li><a href="#" className="hover:text-white transition-colors">Contact Support</a></li>
             </ul>

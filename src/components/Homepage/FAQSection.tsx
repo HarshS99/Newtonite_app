@@ -32,7 +32,7 @@ export const FAQSection: React.FC = () => {
   };
 
   return (
-    <section id="faq" className="w-full py-12 sm:py-16 bg-[#F8FAF7] border-t border-[#E2ECE5]">
+    <section id="faq" className="w-full py-12 sm:py-16 bg-[#F8FAF7] border-t border-[#E2ECE5] scroll-mt-16 sm:scroll-mt-20">
       <div className="max-w-4xl mx-auto px-4 sm:px-6">
         <div className="text-center max-w-xl mx-auto mb-10">
           <span className="text-xs font-bold text-[#176B45] tracking-widest uppercase bg-[#E8F2EA] px-3 py-1 rounded-full">

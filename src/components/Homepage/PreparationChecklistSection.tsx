@@ -30,7 +30,7 @@ export const PreparationChecklistSection: React.FC<PreparationChecklistSectionPr
   ];
 
   return (
-    <section id="documents" className="w-full py-10 sm:py-16 bg-[#F8FAF7]">
+    <section id="documents" className="w-full py-10 sm:py-16 bg-[#F8FAF7] scroll-mt-16 sm:scroll-mt-20">
       <div className="max-w-6xl mx-auto px-4 sm:px-6">
         <div className={`grid gap-6 items-center ${isMobile ? 'grid-cols-1' : 'grid-cols-1 lg:grid-cols-12'}`}>
           {/* Column 1: Mascot in 'Explaining' state & Reassurance Note */}

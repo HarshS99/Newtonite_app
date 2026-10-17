@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Navbar } from '../Common/Navbar';
 import { HeroSection } from './HeroSection';
 import { ThreeStepSection } from './ThreeStepSection';
@@ -6,6 +6,7 @@ import { PreparationChecklistSection } from './PreparationChecklistSection';
 import { TrustSection } from './TrustSection';
 import { FAQSection } from './FAQSection';
 import { Footer } from './Footer';
+import { smoothScrollToSection } from '../../utils/scroll';
 
 interface HomepageViewProps {
   onStartOnboarding: () => void;
@@ -18,6 +19,17 @@ export const HomepageView: React.FC<HomepageViewProps> = ({
   onOpenStep,
   isMobile = false,
 }) => {
+  // If user navigated directly to a hash anchor, smoothly scroll to it
+  useEffect(() => {
+    if (typeof window !== 'undefined' && window.location.hash) {
+      const hash = window.location.hash;
+      const timer = setTimeout(() => {
+        smoothScrollToSection(hash, { duration: 1000, offset: 72 });
+      }, 300);
+      return () => clearTimeout(timer);
+    }
+  }, []);
+
   return (
     <div className="w-full min-h-screen flex flex-col bg-[#F8FAF7] overflow-x-hidden">
       <Navbar onStartInvesting={onStartOnboarding} isMobile={isMobile} />

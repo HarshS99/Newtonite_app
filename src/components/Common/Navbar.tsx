@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { ArrowRight, Globe, Menu, X, ChevronRight } from 'lucide-react';
+import { smoothScrollToSection } from '../../utils/scroll';
 
 interface NavbarProps {
   onStartInvesting: () => void;
@@ -15,6 +16,7 @@ export const Navbar: React.FC<NavbarProps> = ({
   isMobile = false,
 }) => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [activeSection, setActiveSection] = useState<string>('');
 
   const navLinks = [
     { href: '#how-it-works', label: 'How It Works' },
@@ -23,12 +25,37 @@ export const Navbar: React.FC<NavbarProps> = ({
     { href: '#faq', label: 'FAQ' },
   ];
 
+  // Active section tracking during scrolling
+  useEffect(() => {
+    const sectionIds = ['how-it-works', 'documents', 'trust', 'faq'];
+    const updateActiveSection = () => {
+      const scrollY = window.pageYOffset || document.documentElement.scrollTop;
+      let current = '';
+      for (const id of sectionIds) {
+        const el = document.getElementById(id);
+        if (el) {
+          const top = el.offsetTop - 140;
+          const bottom = top + el.offsetHeight;
+          if (scrollY >= top && scrollY < bottom) {
+            current = id;
+            break;
+          }
+        }
+      }
+      setActiveSection(current);
+    };
+
+    window.addEventListener('scroll', updateActiveSection, { passive: true });
+    updateActiveSection();
+    return () => window.removeEventListener('scroll', updateActiveSection);
+  }, []);
+
   const handleLinkClick = (href: string) => {
     setIsMobileMenuOpen(false);
-    const element = document.querySelector(href);
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
-    }
+    // Short delay to allow mobile drawer close animation to finish smoothly
+    setTimeout(() => {
+      smoothScrollToSection(href, { duration: 1000, offset: 72 });
+    }, 120);
   };
 
   return (
@@ -38,6 +65,7 @@ export const Navbar: React.FC<NavbarProps> = ({
         <div 
           onClick={() => {
             setIsMobileMenuOpen(false);
+            smoothScrollToSection('hero', { duration: 900, offset: 0 });
             if (onOpenSection) onOpenSection('hero');
           }} 
           className="flex items-center gap-2.5 cursor-pointer group shrink-0"
@@ -63,15 +91,28 @@ export const Navbar: React.FC<NavbarProps> = ({
         {/* Desktop Nav Links (Hidden on mobile) */}
         {!isMobile && (
           <nav className="hidden md:flex items-center gap-6 text-sm font-medium text-[#46574D]">
-            {navLinks.map((link) => (
-              <a
-                key={link.href}
-                href={link.href}
-                className="hover:text-[#176B45] transition-colors py-2"
-              >
-                {link.label}
-              </a>
-            ))}
+            {navLinks.map((link) => {
+              const id = link.href.replace('#', '');
+              const isActive = activeSection === id;
+              return (
+                <a
+                  key={link.href}
+                  href={link.href}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    smoothScrollToSection(link.href, { duration: 1000, offset: 72 });
+                  }}
+                  className={`relative py-2 transition-colors cursor-pointer text-sm font-medium ${
+                    isActive ? 'text-[#176B45] font-semibold' : 'text-[#46574D] hover:text-[#176B45]'
+                  }`}
+                >
+                  {link.label}
+                  {isActive && (
+                    <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-[#176B45] rounded-full animate-in fade-in duration-200" />
+                  )}
+                </a>
+              );
+            })}
           </nav>
         )}
 

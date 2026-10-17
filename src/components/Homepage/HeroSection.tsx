@@ -2,6 +2,7 @@ import React from 'react';
 import { ArrowRight, ShieldCheck, IndianRupee, Sparkles } from 'lucide-react';
 import { SproutMascot } from '../Mascot/SproutMascot';
 import { RiskDisclaimer } from '../Common/RiskDisclaimer';
+import { smoothScrollToSection } from '../../utils/scroll';
 
 interface HeroSectionProps {
   onGetStarted: () => void;
@@ -53,7 +54,11 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
 
               <a
                 href="#how-it-works"
-                className="w-full min-h-[44px] px-4 py-2.5 border border-[#D5E2D9] hover:bg-[#E8F2EA]/50 text-[#25392D] font-semibold text-sm rounded-xl transition-colors flex items-center justify-center text-center"
+                onClick={(e) => {
+                  e.preventDefault();
+                  smoothScrollToSection('how-it-works', { duration: 1000, offset: 72 });
+                }}
+                className="w-full min-h-[44px] px-4 py-2.5 border border-[#D5E2D9] hover:bg-[#E8F2EA]/50 text-[#25392D] font-semibold text-sm rounded-xl transition-colors flex items-center justify-center text-center cursor-pointer"
               >
                 See How It Works (3 Steps)
               </a>
@@ -155,7 +160,11 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
 
                 <a
                   href="#how-it-works"
-                  className="min-h-[48px] px-5 py-3 border border-[#D5E2D9] hover:bg-[#E8F2EA]/50 text-[#25392D] font-semibold text-sm rounded-xl transition-colors flex items-center justify-center text-center"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    smoothScrollToSection('how-it-works', { duration: 1000, offset: 72 });
+                  }}
+                  className="min-h-[48px] px-5 py-3 border border-[#D5E2D9] hover:bg-[#E8F2EA]/50 text-[#25392D] font-semibold text-sm rounded-xl transition-colors flex items-center justify-center text-center cursor-pointer"
                 >
                   See How It Works (3 Steps)
                 </a>
