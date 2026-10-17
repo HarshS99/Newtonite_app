@@ -42,7 +42,7 @@ export const Footer: React.FC<FooterProps> = ({ isMobile = false }) => {
                   href="#how-it-works" 
                   onClick={(e) => {
                     e.preventDefault();
-                    smoothScrollToSection('how-it-works', { duration: 400, offset: 72 });
+                    smoothScrollToSection('how-it-works');
                   }}
                   className="hover:text-white transition-colors cursor-pointer"
                 >
@@ -54,7 +54,7 @@ export const Footer: React.FC<FooterProps> = ({ isMobile = false }) => {
                   href="#documents" 
                   onClick={(e) => {
                     e.preventDefault();
-                    smoothScrollToSection('documents', { duration: 400, offset: 72 });
+                    smoothScrollToSection('documents');
                   }}
                   className="hover:text-white transition-colors cursor-pointer"
                 >
@@ -66,7 +66,7 @@ export const Footer: React.FC<FooterProps> = ({ isMobile = false }) => {
                   href="#trust" 
                   onClick={(e) => {
                     e.preventDefault();
-                    smoothScrollToSection('trust', { duration: 400, offset: 72 });
+                    smoothScrollToSection('trust');
                   }}
                   className="hover:text-white transition-colors cursor-pointer"
                 >
@@ -85,7 +85,7 @@ export const Footer: React.FC<FooterProps> = ({ isMobile = false }) => {
                   href="#faq" 
                   onClick={(e) => {
                     e.preventDefault();
-                    smoothScrollToSection('faq', { duration: 400, offset: 72 });
+                    smoothScrollToSection('faq');
                   }}
                   className="hover:text-white transition-colors cursor-pointer"
                 >

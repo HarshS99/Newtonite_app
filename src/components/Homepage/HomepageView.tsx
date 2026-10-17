@@ -22,7 +22,7 @@ export const HomepageView: React.FC<HomepageViewProps> = ({
   // If user navigated directly to a hash anchor, smoothly scroll to it immediately
   useEffect(() => {
     if (typeof window !== 'undefined' && window.location.hash) {
-      smoothScrollToSection(window.location.hash, { duration: 400, offset: 72 });
+      smoothScrollToSection(window.location.hash);
     }
   }, []);
 

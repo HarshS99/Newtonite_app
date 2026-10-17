@@ -1,33 +1,8 @@
 /**
- * Custom smooth scrolling utility with timestamp-based requestAnimationFrame animation.
- * Provides a paced, elegant, and slow scroll transition between sections with easing.
+ * Fast, instant-response smooth scrolling utility.
+ * Triggers hardware-accelerated smooth scrolling with 0ms delay.
  */
 
-let activeScrollAnimationId: number | null = null;
-let stopScrollListenerAttached = false;
-
-const cancelActiveScroll = () => {
-  if (activeScrollAnimationId !== null) {
-    cancelAnimationFrame(activeScrollAnimationId);
-    activeScrollAnimationId = null;
-  }
-};
-
-// If the user manually interrupts the scroll with wheel or touch, smoothly yield control
-const handleUserInterrupt = () => {
-  cancelActiveScroll();
-};
-
-const setupInterruptListeners = () => {
-  if (stopScrollListenerAttached || typeof window === 'undefined') return;
-  window.addEventListener('wheel', handleUserInterrupt, { passive: true });
-  window.addEventListener('touchstart', handleUserInterrupt, { passive: true });
-  stopScrollListenerAttached = true;
-};
-
-/**
- * Finds the nearest scrollable parent container (e.g. window or simulated phone container)
- */
 export function getScrollParent(node: HTMLElement | null): HTMLElement | Window {
   if (!node || typeof window === 'undefined') return window;
 
@@ -43,29 +18,16 @@ export function getScrollParent(node: HTMLElement | null): HTMLElement | Window 
   return window;
 }
 
-/**
- * Fast, immediate-response easing (ease-out cubic).
- * Starts moving on the VERY FIRST frame (zero lag / no hesitation),
- * then decelerates smoothly and gracefully into the exact section target.
- */
-const easeOutCubic = (t: number): number => {
-  const p = 1 - t;
-  return 1 - p * p * p;
-};
-
 export interface SmoothScrollOptions {
-  duration?: number; // Duration in ms (default: 400ms for fast, snappy, smooth travel)
-  offset?: number;   // Top offset to accommodate sticky navbar (default: 72px)
+  duration?: number;
+  offset?: number;
   updateHash?: boolean;
 }
 
 /**
- * Smoothly scrolls to an element by ID or to the top of the container.
- * Uses requestAnimationFrame with high-precision timestamp.
- * Responds immediately upon click with zero delay.
- * 
- * @param targetId ID of the element (e.g., 'how-it-works', '#documents', or 'top')
- * @param options Duration, offset, and hash update settings
+ * Smoothly scrolls to an element by ID or to the top.
+ * Starts IMMEDIATELY upon clicking with 0ms delay.
+ * Uses native GPU-composited smooth scrolling to eliminate all lag.
  */
 export function smoothScrollToSection(
   targetId: string,
@@ -73,119 +35,44 @@ export function smoothScrollToSection(
 ): void {
   if (typeof window === 'undefined') return;
 
-  setupInterruptListeners();
-  cancelActiveScroll();
-
-  const {
-    duration = 400, // 400ms: fast, responsive, and smooth with zero waiting
-    offset = 72,    // 72px offset for sticky header breathing room
-    updateHash = true,
-  } = options;
-
+  const { updateHash = true } = options;
   const cleanId = targetId.replace(/^#/, '').trim();
 
-  // Handle scrolling to top
+  // Scroll to top
   if (!cleanId || cleanId === 'top' || cleanId === 'hero') {
-    const startY = window.pageYOffset || document.documentElement.scrollTop;
-    if (startY <= 0) return;
+    const header = document.querySelector('header');
+    const container = getScrollParent(header);
 
-    let startTime: number | null = null;
-    const step = (timestamp: number) => {
-      if (startTime === null) startTime = timestamp;
-      const elapsed = timestamp - startTime;
-      const progress = Math.min(elapsed / duration, 1);
-      const eased = easeOutCubic(progress);
+    if (container === window) {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    } else {
+      (container as HTMLElement).scrollTo({ top: 0, behavior: 'smooth' });
+    }
 
-      window.scrollTo(0, Math.round(startY * (1 - eased)));
-
-      if (progress < 1) {
-        activeScrollAnimationId = requestAnimationFrame(step);
-      } else {
-        window.scrollTo(0, 0);
-        activeScrollAnimationId = null;
-        if (updateHash) {
-          try {
-            history.pushState(null, '', window.location.pathname);
-          } catch {
-            // ignore
-          }
-        }
+    if (updateHash) {
+      try {
+        history.pushState(null, '', window.location.pathname);
+      } catch {
+        // ignore
       }
-    };
-
-    activeScrollAnimationId = requestAnimationFrame(step);
+    }
     return;
   }
 
   // Find target element
   const targetElement = document.getElementById(cleanId);
   if (!targetElement) {
-    console.warn(`[smoothScrollToSection] Element with id "${cleanId}" not found.`);
     return;
   }
 
-  const container = getScrollParent(targetElement);
-  const isWindow = container === window;
+  // Immediate native smooth scroll (0ms delay, hardware accelerated)
+  targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
 
-  const startPosition = isWindow
-    ? (window.pageYOffset || document.documentElement.scrollTop)
-    : (container as HTMLElement).scrollTop;
-
-  let targetPosition = 0;
-  let maxScroll = 0;
-
-  if (isWindow) {
-    const rect = targetElement.getBoundingClientRect();
-    targetPosition = startPosition + rect.top - offset;
-    maxScroll = Math.max(0, document.documentElement.scrollHeight - window.innerHeight);
-  } else {
-    const el = container as HTMLElement;
-    const containerRect = el.getBoundingClientRect();
-    const targetRect = targetElement.getBoundingClientRect();
-    targetPosition = startPosition + (targetRect.top - containerRect.top) - offset;
-    maxScroll = Math.max(0, el.scrollHeight - el.clientHeight);
+  if (updateHash) {
+    try {
+      history.pushState(null, '', `#${cleanId}`);
+    } catch {
+      // ignore
+    }
   }
-
-  const finalDestination = Math.max(0, Math.min(targetPosition, maxScroll));
-  const distance = finalDestination - startPosition;
-
-  if (Math.abs(distance) < 2) return;
-
-  let startTime: number | null = null;
-
-  const step = (timestamp: number) => {
-    if (startTime === null) startTime = timestamp;
-    const elapsed = timestamp - startTime;
-    const progress = Math.min(elapsed / duration, 1);
-    const easedProgress = easeOutCubic(progress);
-
-    const currentPos = Math.round(startPosition + distance * easedProgress);
-
-    if (isWindow) {
-      window.scrollTo(0, currentPos);
-    } else {
-      (container as HTMLElement).scrollTop = currentPos;
-    }
-
-    if (progress < 1) {
-      activeScrollAnimationId = requestAnimationFrame(step);
-    } else {
-      if (isWindow) {
-        window.scrollTo(0, finalDestination);
-      } else {
-        (container as HTMLElement).scrollTop = finalDestination;
-      }
-      activeScrollAnimationId = null;
-
-      if (updateHash) {
-        try {
-          history.pushState(null, '', `#${cleanId}`);
-        } catch {
-          // ignore
-        }
-      }
-    }
-  };
-
-  activeScrollAnimationId = requestAnimationFrame(step);
 }

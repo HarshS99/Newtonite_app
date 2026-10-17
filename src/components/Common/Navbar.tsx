@@ -25,34 +25,35 @@ export const Navbar: React.FC<NavbarProps> = ({
     { href: '#faq', label: 'FAQ' },
   ];
 
-  // Active section tracking during scrolling
+  // Active section tracking with IntersectionObserver (zero scroll event reflow overhead)
   useEffect(() => {
     const sectionIds = ['how-it-works', 'documents', 'trust', 'faq'];
-    const updateActiveSection = () => {
-      const scrollY = window.pageYOffset || document.documentElement.scrollTop;
-      let current = '';
-      for (const id of sectionIds) {
-        const el = document.getElementById(id);
-        if (el) {
-          const top = el.offsetTop - 140;
-          const bottom = top + el.offsetHeight;
-          if (scrollY >= top && scrollY < bottom) {
-            current = id;
-            break;
-          }
-        }
-      }
-      setActiveSection(current);
-    };
+    const elements = sectionIds
+      .map((id) => document.getElementById(id))
+      .filter((el): el is HTMLElement => el !== null);
 
-    window.addEventListener('scroll', updateActiveSection, { passive: true });
-    updateActiveSection();
-    return () => window.removeEventListener('scroll', updateActiveSection);
+    if (elements.length === 0) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const visible = entries.find((e) => e.isIntersecting);
+        if (visible) {
+          setActiveSection(visible.target.id);
+        }
+      },
+      {
+        rootMargin: '-80px 0px -40% 0px',
+        threshold: 0.1,
+      }
+    );
+
+    elements.forEach((el) => observer.observe(el));
+    return () => observer.disconnect();
   }, []);
 
   const handleLinkClick = (href: string) => {
     setIsMobileMenuOpen(false);
-    smoothScrollToSection(href, { duration: 400, offset: 72 });
+    smoothScrollToSection(href);
   };
 
   return (
@@ -62,7 +63,7 @@ export const Navbar: React.FC<NavbarProps> = ({
         <div 
           onClick={() => {
             setIsMobileMenuOpen(false);
-            smoothScrollToSection('hero', { duration: 400, offset: 0 });
+            smoothScrollToSection('top');
             if (onOpenSection) onOpenSection('hero');
           }} 
           className="flex items-center gap-2.5 cursor-pointer group shrink-0"
@@ -97,7 +98,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                   href={link.href}
                   onClick={(e) => {
                     e.preventDefault();
-                    smoothScrollToSection(link.href, { duration: 400, offset: 72 });
+                    smoothScrollToSection(link.href);
                   }}
                   className={`relative py-2 transition-colors cursor-pointer text-sm font-medium ${
                     isActive ? 'text-[#176B45] font-semibold' : 'text-[#46574D] hover:text-[#176B45]'

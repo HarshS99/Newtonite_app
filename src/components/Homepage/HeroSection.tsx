@@ -56,7 +56,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
                 href="#how-it-works"
                 onClick={(e) => {
                   e.preventDefault();
-                  smoothScrollToSection('how-it-works', { duration: 400, offset: 72 });
+                  smoothScrollToSection('how-it-works');
                 }}
                 className="w-full min-h-[44px] px-4 py-2.5 border border-[#D5E2D9] hover:bg-[#E8F2EA]/50 text-[#25392D] font-semibold text-sm rounded-xl transition-colors flex items-center justify-center text-center cursor-pointer"
               >
@@ -162,7 +162,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
                   href="#how-it-works"
                   onClick={(e) => {
                     e.preventDefault();
-                    smoothScrollToSection('how-it-works', { duration: 400, offset: 72 });
+                    smoothScrollToSection('how-it-works');
                   }}
                   className="min-h-[48px] px-5 py-3 border border-[#D5E2D9] hover:bg-[#E8F2EA]/50 text-[#25392D] font-semibold text-sm rounded-xl transition-colors flex items-center justify-center text-center cursor-pointer"
                 >
