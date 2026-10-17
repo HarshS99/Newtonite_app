@@ -114,8 +114,7 @@ export const Footer: React.FC<FooterProps> = ({ isMobile = false }) => {
             <strong>Statutory Disclaimer:</strong> Mutual fund investments are subject to market risks. Read all scheme-related documents carefully. Past performance does not indicate future results. No returns or capital preservation are guaranteed. This interface represents an evaluation UI/UX design prototype.
           </p>
           <div className="flex flex-col sm:flex-row items-center justify-between text-[11px] text-[#718D7F] pt-4 border-t border-[#1C3626]">
-            <span>© 2026 Sprout 2.0 • Designed by Harsh Singh.</span>
-            <span>Created for Newtonite UI/UX Design Assignment Evaluation.</span>
+            <span>© 2026 Sprout 2.0. All rights reserved.</span>
           </div>
         </div>
       </div>
