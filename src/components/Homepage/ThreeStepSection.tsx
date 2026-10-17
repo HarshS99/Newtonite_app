@@ -35,7 +35,7 @@ export const ThreeStepSection: React.FC<ThreeStepSectionProps> = ({
   ];
 
   return (
-    <section id="how-it-works" className="w-full py-12 sm:py-16 bg-white border-y border-[#E2ECE5] scroll-mt-16 sm:scroll-mt-20">
+    <section id="how-it-works" className="w-full py-12 sm:py-16 bg-white border-y border-[#E2ECE5] scroll-mt-32">
       <div className="max-w-6xl mx-auto px-4 sm:px-6">
         {/* Section Header */}
         <div className="text-center max-w-2xl mx-auto mb-10 sm:mb-12">

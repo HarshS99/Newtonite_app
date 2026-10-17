@@ -30,7 +30,7 @@ export const TrustSection: React.FC<TrustSectionProps> = ({ isMobile = false }) 
   ];
 
   return (
-    <section id="trust" className="w-full py-10 sm:py-16 bg-white border-t border-[#E2ECE5] scroll-mt-16 sm:scroll-mt-20">
+    <section id="trust" className="w-full py-10 sm:py-16 bg-white border-t border-[#E2ECE5] scroll-mt-32">
       <div className="max-w-6xl mx-auto px-4 sm:px-6">
         <div className="text-center max-w-2xl mx-auto mb-8 sm:mb-10">
           <span className="text-xs font-bold text-[#176B45] tracking-widest uppercase bg-[#E8F2EA] px-3 py-1 rounded-full">

@@ -106,7 +106,7 @@ export function App() {
   };
 
   return (
-    <div className="min-h-screen bg-[#F8FAF7] text-[#17251D] flex flex-col font-sans overflow-x-hidden">
+    <div className="min-h-screen bg-[#F8FAF7] text-[#17251D] flex flex-col font-sans">
       {/* 1. Global Prototype Navigation & Testing Bar */}
       <PrototypeBar
         currentScreen={currentScreen}
@@ -116,7 +116,7 @@ export function App() {
       />
 
       {/* 2. Main Content Views */}
-      <main className="flex-1 w-full flex flex-col items-center overflow-x-hidden">
+      <main className="flex-1 w-full flex flex-col items-center">
         {/* Tab 1: Design System & Mascot View */}
         {viewMode === 'design-system' && <DesignSystemView />}
 
@@ -125,14 +125,14 @@ export function App() {
 
         {/* Tab 3: Responsive View */}
         {viewMode === 'responsive' && (
-          <div className="w-full flex-1 flex flex-col items-center overflow-x-hidden">
+          <div className="w-full flex-1 flex flex-col items-center">
             {renderScreen(isWindowMobile)}
           </div>
         )}
 
         {/* Tab 4: 390px Mobile Frame Simulator (for screenshots & Figma testing) */}
         {viewMode === 'mobile-390' && (
-          <div className="pt-3 pb-8 px-2 flex flex-col items-center w-full max-w-full overflow-x-hidden">
+          <div className="pt-3 pb-8 px-2 flex flex-col items-center w-full max-w-full">
             <p className="text-center mb-3 text-[11px] text-[#526359]">
               <span className="font-bold text-[#176B45]">Mobile Device Frame</span> • 390 × 844 px
             </p>
@@ -146,7 +146,8 @@ export function App() {
                 borderRadius: '44px',
                 border: '10px solid #1C2C22',
                 boxShadow: '0 32px 80px rgba(0,0,0,0.45)',
-              }}
+                '--navbar-top': '0px',
+              } as React.CSSProperties}
             >
               {/* Phone Status Bar */}
               <div className="w-full h-11 bg-white px-5 flex items-center justify-between text-xs font-semibold text-[#17251D] shrink-0 border-b border-[#F0F5F2] select-none">
@@ -180,7 +181,10 @@ export function App() {
             </div>
 
             {/* Browser Chassis */}
-            <div className="w-full bg-white rounded-2xl border border-[#DCE8E0] shadow-xl overflow-hidden flex flex-col">
+            <div 
+              className="w-full bg-white rounded-2xl border border-[#DCE8E0] shadow-xl overflow-hidden flex flex-col"
+              style={{ '--navbar-top': '0px' } as React.CSSProperties}
+            >
               {/* Browser Header Bar */}
               <div className="w-full bg-[#EBF2ED] px-4 py-2.5 flex items-center gap-3 border-b border-[#D7E3DA]">
                 <div className="flex items-center gap-1.5">

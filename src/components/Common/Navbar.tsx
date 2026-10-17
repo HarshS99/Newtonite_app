@@ -57,7 +57,10 @@ export const Navbar: React.FC<NavbarProps> = ({
   };
 
   return (
-    <header className="sticky top-0 z-40 w-full bg-[#F8FAF7]/95 backdrop-blur-md border-b border-[#E2ECE5]">
+    <header 
+      style={{ top: 'var(--navbar-top, 44px)' }} 
+      className="sticky z-40 w-full bg-[#F8FAF7]/95 backdrop-blur-md border-b border-[#E2ECE5] shadow-xs transition-[top] duration-150"
+    >
       <div className="max-w-6xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
         {/* Brand Logo */}
         <div 
