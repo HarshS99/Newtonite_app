@@ -19,14 +19,10 @@ export const HomepageView: React.FC<HomepageViewProps> = ({
   onOpenStep,
   isMobile = false,
 }) => {
-  // If user navigated directly to a hash anchor, smoothly scroll to it
+  // If user navigated directly to a hash anchor, smoothly scroll to it immediately
   useEffect(() => {
     if (typeof window !== 'undefined' && window.location.hash) {
-      const hash = window.location.hash;
-      const timer = setTimeout(() => {
-        smoothScrollToSection(hash, { duration: 1000, offset: 72 });
-      }, 300);
-      return () => clearTimeout(timer);
+      smoothScrollToSection(window.location.hash, { duration: 400, offset: 72 });
     }
   }, []);
 

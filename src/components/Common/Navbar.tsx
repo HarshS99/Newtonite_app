@@ -52,10 +52,7 @@ export const Navbar: React.FC<NavbarProps> = ({
 
   const handleLinkClick = (href: string) => {
     setIsMobileMenuOpen(false);
-    // Short delay to allow mobile drawer close animation to finish smoothly
-    setTimeout(() => {
-      smoothScrollToSection(href, { duration: 1000, offset: 72 });
-    }, 120);
+    smoothScrollToSection(href, { duration: 400, offset: 72 });
   };
 
   return (
@@ -65,7 +62,7 @@ export const Navbar: React.FC<NavbarProps> = ({
         <div 
           onClick={() => {
             setIsMobileMenuOpen(false);
-            smoothScrollToSection('hero', { duration: 900, offset: 0 });
+            smoothScrollToSection('hero', { duration: 400, offset: 0 });
             if (onOpenSection) onOpenSection('hero');
           }} 
           className="flex items-center gap-2.5 cursor-pointer group shrink-0"
@@ -100,7 +97,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                   href={link.href}
                   onClick={(e) => {
                     e.preventDefault();
-                    smoothScrollToSection(link.href, { duration: 1000, offset: 72 });
+                    smoothScrollToSection(link.href, { duration: 400, offset: 72 });
                   }}
                   className={`relative py-2 transition-colors cursor-pointer text-sm font-medium ${
                     isActive ? 'text-[#176B45] font-semibold' : 'text-[#46574D] hover:text-[#176B45]'

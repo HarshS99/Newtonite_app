@@ -44,16 +44,17 @@ export function getScrollParent(node: HTMLElement | null): HTMLElement | Window 
 }
 
 /**
- * Cubic ease-in-out easing function for graceful acceleration and deceleration
+ * Fast, immediate-response easing (ease-out cubic).
+ * Starts moving on the VERY FIRST frame (zero lag / no hesitation),
+ * then decelerates smoothly and gracefully into the exact section target.
  */
-const easeInOutCubic = (t: number): number => {
-  return t < 0.5 
-    ? 4 * t * t * t 
-    : 1 - Math.pow(-2 * t + 2, 3) / 2;
+const easeOutCubic = (t: number): number => {
+  const p = 1 - t;
+  return 1 - p * p * p;
 };
 
 export interface SmoothScrollOptions {
-  duration?: number; // Duration in ms (default: 1000ms for slow, elegant travel)
+  duration?: number; // Duration in ms (default: 400ms for fast, snappy, smooth travel)
   offset?: number;   // Top offset to accommodate sticky navbar (default: 72px)
   updateHash?: boolean;
 }
@@ -61,12 +62,13 @@ export interface SmoothScrollOptions {
 /**
  * Smoothly scrolls to an element by ID or to the top of the container.
  * Uses requestAnimationFrame with high-precision timestamp.
+ * Responds immediately upon click with zero delay.
  * 
  * @param targetId ID of the element (e.g., 'how-it-works', '#documents', or 'top')
  * @param options Duration, offset, and hash update settings
  */
 export function smoothScrollToSection(
-  targetId: string, 
+  targetId: string,
   options: SmoothScrollOptions = {}
 ): void {
   if (typeof window === 'undefined') return;
@@ -75,8 +77,8 @@ export function smoothScrollToSection(
   cancelActiveScroll();
 
   const {
-    duration = 1000, // 1 second duration for clear, visible, smooth scrolling
-    offset = 72,     // 72px offset for sticky header breathing room
+    duration = 400, // 400ms: fast, responsive, and smooth with zero waiting
+    offset = 72,    // 72px offset for sticky header breathing room
     updateHash = true,
   } = options;
 
@@ -92,7 +94,7 @@ export function smoothScrollToSection(
       if (startTime === null) startTime = timestamp;
       const elapsed = timestamp - startTime;
       const progress = Math.min(elapsed / duration, 1);
-      const eased = easeInOutCubic(progress);
+      const eased = easeOutCubic(progress);
 
       window.scrollTo(0, Math.round(startY * (1 - eased)));
 
@@ -155,7 +157,7 @@ export function smoothScrollToSection(
     if (startTime === null) startTime = timestamp;
     const elapsed = timestamp - startTime;
     const progress = Math.min(elapsed / duration, 1);
-    const easedProgress = easeInOutCubic(progress);
+    const easedProgress = easeOutCubic(progress);
 
     const currentPos = Math.round(startPosition + distance * easedProgress);
 

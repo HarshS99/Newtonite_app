@@ -13,7 +13,7 @@ export const Footer: React.FC<FooterProps> = ({ isMobile = false }) => {
           {/* Brand Col */}
           <div className={`space-y-3 ${isMobile ? 'w-full' : 'md:col-span-5'}`}>
             <div 
-              onClick={() => smoothScrollToSection('top', { duration: 900, offset: 0 })}
+              onClick={() => smoothScrollToSection('top', { duration: 400, offset: 0 })}
               className="flex items-center gap-2 cursor-pointer group w-fit"
               role="button"
               tabIndex={0}
@@ -42,7 +42,7 @@ export const Footer: React.FC<FooterProps> = ({ isMobile = false }) => {
                   href="#how-it-works" 
                   onClick={(e) => {
                     e.preventDefault();
-                    smoothScrollToSection('how-it-works', { duration: 1000, offset: 72 });
+                    smoothScrollToSection('how-it-works', { duration: 400, offset: 72 });
                   }}
                   className="hover:text-white transition-colors cursor-pointer"
                 >
@@ -54,7 +54,7 @@ export const Footer: React.FC<FooterProps> = ({ isMobile = false }) => {
                   href="#documents" 
                   onClick={(e) => {
                     e.preventDefault();
-                    smoothScrollToSection('documents', { duration: 1000, offset: 72 });
+                    smoothScrollToSection('documents', { duration: 400, offset: 72 });
                   }}
                   className="hover:text-white transition-colors cursor-pointer"
                 >
@@ -66,7 +66,7 @@ export const Footer: React.FC<FooterProps> = ({ isMobile = false }) => {
                   href="#trust" 
                   onClick={(e) => {
                     e.preventDefault();
-                    smoothScrollToSection('trust', { duration: 1000, offset: 72 });
+                    smoothScrollToSection('trust', { duration: 400, offset: 72 });
                   }}
                   className="hover:text-white transition-colors cursor-pointer"
                 >
@@ -85,7 +85,7 @@ export const Footer: React.FC<FooterProps> = ({ isMobile = false }) => {
                   href="#faq" 
                   onClick={(e) => {
                     e.preventDefault();
-                    smoothScrollToSection('faq', { duration: 1000, offset: 72 });
+                    smoothScrollToSection('faq', { duration: 400, offset: 72 });
                   }}
                   className="hover:text-white transition-colors cursor-pointer"
                 >
