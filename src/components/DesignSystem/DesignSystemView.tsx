@@ -120,6 +120,58 @@ export const DesignSystemView: React.FC = () => {
             </div>
           ))}
         </div>
+
+        {/* ─── High-Fidelity 3D Design Assets Showcase ─── */}
+        <div className="mt-8 p-6 rounded-3xl bg-gradient-to-br from-[#17251D] via-[#1D3227] to-[#25392D] text-white border border-[#3A5043] shadow-lg">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-6 border-b border-white/10 pb-4">
+            <div>
+              <span className="text-[10px] font-bold text-[#86E4B1] uppercase tracking-wider bg-white/10 px-2.5 py-0.5 rounded-full">
+                High-Fidelity 3D Design Suite
+              </span>
+              <h3 className="text-xl font-extrabold mt-1">
+                3D Mascot & App Presentation Renders
+              </h3>
+              <p className="text-xs text-[#A8D3BC] mt-0.5">
+                Engineered for Play Store feature graphics, marketing hero collateral, and desktop presentations.
+              </p>
+            </div>
+            <span className="text-[11px] font-semibold text-[#86E4B1] bg-[#176B45]/60 px-3 py-1 rounded-lg border border-[#44B77F]/30 shrink-0 self-start sm:self-auto">
+              Dual-Fidelity Strategy
+            </span>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-12 gap-6 items-center">
+            {/* Card 1: 3D Mascot on ₹100 Coin */}
+            <div className="md:col-span-5 bg-white/5 rounded-2xl p-4 border border-white/10 flex flex-col items-center text-center">
+              <img
+                src="/assets/sprout_3d_mascot.jpg"
+                alt="Sprout 3D Mascot on Rupee Coin"
+                className="w-full max-w-[280px] rounded-xl shadow-xl border border-white/10 object-cover"
+              />
+              <div className="mt-3">
+                <h4 className="font-bold text-sm text-white">3D Botanical Sprout Guide</h4>
+                <p className="text-[11px] text-[#A8D3BC] mt-0.5 leading-snug">
+                  Embossed botanical guide perched atop the ₹100 Rupee coin — symbolizing organic micro-growth.
+                </p>
+              </div>
+            </div>
+
+            {/* Card 2: 3D App Ecosystem Banner */}
+            <div className="md:col-span-7 bg-white/5 rounded-2xl p-4 border border-white/10 flex flex-col items-center text-center">
+              <img
+                src="/assets/sprout_3d_banner.jpg"
+                alt="Sprout 2.0 3D App Banner"
+                className="w-full rounded-xl shadow-xl border border-white/10 object-cover"
+              />
+              <div className="mt-3">
+                <h4 className="font-bold text-sm text-white">Sprout 2.0 3D App Ecosystem Banner</h4>
+                <p className="text-[11px] text-[#A8D3BC] mt-0.5 leading-snug">
+                  Complete multi-screen onboarding journey in realistic 3D isometric perspective for recruiter review.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
       </section>
 
       {/* 2. Color Palette & Contrast Ratios */}

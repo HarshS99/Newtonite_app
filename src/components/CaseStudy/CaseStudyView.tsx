@@ -327,9 +327,22 @@ export const CaseStudyView: React.FC = () => {
             </div>
           </div>
 
-          <div className="md:col-span-4 flex flex-col items-center justify-center p-4 rounded-2xl bg-[#F8FAF7] border border-[#DCE8E0]">
-            <SproutMascot state="welcome" size={120} />
-            <span className="text-[11px] font-bold text-[#176B45] mt-2">Geometric Sprout v2.0</span>
+          <div className="md:col-span-5 flex flex-col sm:flex-row md:flex-col gap-3">
+            <div className="flex-1 flex flex-col items-center justify-center p-3 rounded-2xl bg-[#F8FAF7] border border-[#DCE8E0] text-center">
+              <SproutMascot state="welcome" size={100} />
+              <span className="text-[10px] font-bold text-[#176B45] mt-1.5">In-App Lightweight SVG (&lt;4 KB)</span>
+              <span className="text-[9px] text-[#526359]">Zero network overhead for 4G phones</span>
+            </div>
+
+            <div className="flex-1 flex flex-col items-center justify-center p-3 rounded-2xl bg-white border border-[#DCE8E0] text-center shadow-xs">
+              <img
+                src="/assets/sprout_3d_mascot.jpg"
+                alt="Sprout 3D Mascot on Rupee Coin"
+                className="w-full max-w-[200px] rounded-xl shadow-md border border-[#DCE8E0] object-cover"
+              />
+              <span className="text-[10px] font-bold text-[#17251D] mt-2">3D Mascot on ₹100 Coin</span>
+              <span className="text-[9px] text-[#526359]">Play Store & Marketing Collateral</span>
+            </div>
           </div>
         </div>
       </article>
@@ -343,6 +356,18 @@ export const CaseStudyView: React.FC = () => {
         <h2 className="text-2xl font-extrabold text-[#17251D]">
           Mobile Homepage (390px) & Responsive Desktop (1440px)
         </h2>
+
+        {/* 3D App Ecosystem Banner */}
+        <div className="w-full rounded-2xl overflow-hidden border border-[#DCE8E0] shadow-md my-2">
+          <img
+            src="/assets/sprout_3d_banner.jpg"
+            alt="Sprout 2.0 3D App Ecosystem Showcase"
+            className="w-full h-auto object-cover"
+          />
+          <div className="p-2.5 bg-[#F8FAF7] border-t border-[#DCE8E0] text-center text-[11px] text-[#526359]">
+            <strong className="text-[#176B45]">Sprout 2.0 3D App Ecosystem:</strong> Unified visual journey from discovery to first ₹100 investment
+          </div>
+        </div>
 
         <div className="space-y-3 text-xs sm:text-sm text-[#46594E] leading-relaxed">
           <p>

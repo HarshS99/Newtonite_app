@@ -202,7 +202,7 @@ export function App() {
         )}
       </main>
 
-      {/* 3. Sprout AI RAG Assistant with Groq */}
+      {/* 3. Sprout AI Assistant */}
       <SproutChatbot />
     </div>
   );

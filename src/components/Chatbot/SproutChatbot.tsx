@@ -52,7 +52,7 @@ function createMessage(
 const INITIAL_MESSAGE: ChatMessage = {
   id: 'welcome-initial',
   sender: 'assistant',
-  text: "👋 Hi! I'm Sprout AI, your micro-investing guide powered by **RAG (Knowledge Retrieval) + Groq**.\n\nAsk me anything about starting with ₹100, PAN/Aadhaar DigiLocker verification, or statutory safety rules!",
+  text: "👋 Hi! I'm Sprout AI, your personal micro-investing guide.\n\nAsk me anything about starting with ₹100, PAN/Aadhaar DigiLocker verification, or SEBI safety guidelines!",
   timeString: 'Just now',
 };
 
@@ -138,10 +138,6 @@ export const SproutChatbot: React.FC = () => {
     ]);
   };
 
-  const currentModelLabel =
-    SUPPORTED_MODELS.find((m) => m.id === selectedModel)?.label.split('(')[0].trim() ||
-    selectedModel;
-
   return (
     <>
       {/* ─── Floating Trigger Button (Bottom Right) ─── */}
@@ -157,7 +153,7 @@ export const SproutChatbot: React.FC = () => {
           </div>
           <div className="text-left hidden sm:block">
             <div className="text-xs font-bold leading-none text-white">Sprout AI</div>
-            <div className="text-[10px] text-[#A8D3BC] leading-none mt-0.5">RAG + Groq</div>
+            <div className="text-[10px] text-[#A8D3BC] leading-none mt-0.5">Help & Guide</div>
           </div>
         </button>
       )}
@@ -175,23 +171,22 @@ export const SproutChatbot: React.FC = () => {
               <div>
                 <div className="flex items-center gap-1.5">
                   <span className="font-bold text-sm tracking-tight">Sprout AI</span>
-                  <span className="text-[9px] font-bold px-1.5 py-0.2 rounded bg-[#176B45] text-white">
-                    RAG
+                  <span className="text-[9px] font-semibold px-2 py-0.5 rounded-full bg-[#176B45] text-[#86E4B1] border border-[#2B825B]/40">
+                    Interactive Guide
                   </span>
-                  <span className="text-[9px] font-medium text-[#86E4B1]">{currentModelLabel}</span>
                 </div>
-                <p className="text-[10px] text-[#A0B5A8]">Grounded in SEBI & Sprout Knowledge Base</p>
+                <p className="text-[10px] text-[#A0B5A8]">Grounded in SEBI & Sprout Guidelines</p>
               </div>
             </div>
 
             <div className="flex items-center gap-1">
               <button
                 onClick={() => setShowSettings(!showSettings)}
-                title="Configure Groq API Key & Model"
+                title="Assistant Settings"
                 className={`w-8 h-8 rounded-lg flex items-center justify-center transition-all cursor-pointer ${
                   hasApiKey
                     ? 'text-[#44B77F] hover:bg-[#25392D]'
-                    : 'text-[#F5A623] hover:bg-[#25392D] animate-pulse'
+                    : 'text-[#A0B5A8] hover:text-white hover:bg-[#25392D]'
                 }`}
               >
                 <Key className="w-4 h-4" />
@@ -221,19 +216,19 @@ export const SproutChatbot: React.FC = () => {
               <div className="flex items-center justify-between">
                 <span className="font-bold text-[#17251D] flex items-center gap-1.5">
                   <Key className="w-3.5 h-3.5 text-[#176B45]" />
-                  Groq LLM Configuration
+                  Assistant Configuration
                 </span>
                 <span className={`text-[10px] font-semibold px-2 py-0.5 rounded-full ${
-                  hasApiKey ? 'bg-[#E8F2EA] text-[#176B45]' : 'bg-[#FFF3D6] text-[#8C6200]'
+                  hasApiKey ? 'bg-[#E8F2EA] text-[#176B45]' : 'bg-[#EDF5F0] text-[#526359]'
                 }`}>
-                  {hasApiKey ? 'Key Active' : 'Missing Key'}
+                  {hasApiKey ? 'Custom Key Active' : 'Default Mode'}
                 </span>
               </div>
 
               <form onSubmit={handleSaveSettings} className="space-y-2">
                 <div>
                   <label className="text-[10px] font-bold text-[#4B5E53] uppercase tracking-wider block mb-1">
-                    Groq API Key
+                    API Key (Optional)
                   </label>
                   <input
                     type="password"
@@ -313,7 +308,7 @@ export const SproutChatbot: React.FC = () => {
                     >
                       <BookOpen className="w-2.5 h-2.5" />
                       <span>
-                        Retrieved Context ({msg.retrievedSources.length} sources)
+                        Verified Sources ({msg.retrievedSources.length})
                       </span>
                       {expandedSources[msg.id] ? (
                         <ChevronUp className="w-2.5 h-2.5" />
@@ -325,7 +320,7 @@ export const SproutChatbot: React.FC = () => {
                     {expandedSources[msg.id] && (
                       <div className="mt-1.5 p-2 rounded-lg bg-white border border-[#DCE8E0] space-y-2 text-left shadow-xs">
                         <span className="font-bold text-[#17251D] block text-[10px]">
-                          📚 Knowledge Documents Injected into RAG Prompt:
+                          📚 Regulatory & Knowledge References:
                         </span>
                         {msg.retrievedSources.map((source, idx) => (
                           <div
@@ -416,7 +411,7 @@ export const SproutChatbot: React.FC = () => {
                 <ShieldCheck className="w-2.5 h-2.5 text-[#176B45]" />
                 SEBI compliance grounded
               </span>
-              <span>Groq Powered</span>
+              <span>Verified Assistant</span>
             </div>
           </div>
         </div>

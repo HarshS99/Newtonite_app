@@ -157,23 +157,21 @@ export async function sendQueryToGroqRAG(
   }
 
   return {
-    text: `⚠️ **Could not connect to Groq LLM**: ${lastError?.message || 'All candidate models failed'}\n\n*Note:* You can update your Groq API key by clicking the ⚙️ Settings icon in the chat header, or add \`VITE_GROQ_API_KEY=your_key\` to your \`.env\` file.`,
+    text: `⚠️ **Unable to connect to live assistant**: ${lastError?.message || 'Please check your connection'}.\n\nYou can still access our verified guidelines and FAQ on the homepage.`,
     sources: retrievedSources,
   };
 }
 
 /**
- * Offline RAG generator when API key is not yet provided
+ * Offline knowledge assistant when API key is not yet provided
  */
 function generateOfflineRagResponse(query: string, sources: RetrievedChunk[]): string {
   const topDoc = sources[0]?.document;
   if (!topDoc) {
-    return `Regarding "${query}": Welcome to Sprout 2.0! Ask me anything about ₹100 micro-investing, PAN/Aadhaar verification, or SEBI safety guidelines.\n\n*💡 To enable live Groq AI responses, please configure your Groq API key in the chat settings or in your \`.env\` file.*`;
+    return `Regarding "${query}": Welcome to Sprout 2.0! Ask me anything about ₹100 micro-investing, PAN/Aadhaar verification, or SEBI safety guidelines.`;
   }
 
-  return `Regarding "${query}", here is what our verified knowledge base indicates from **${topDoc.title}**:
+  return `Regarding "${query}", here is what our verified guidelines indicate from **${topDoc.title}**:
 
-${topDoc.content.slice(0, 320)}...
-
-*(💡 Live AI responses powered by Groq. Click the ⚙️ Key icon above to paste your Groq API key or add it to \`.env\` to enable real-time LLM chat generation.)*`;
+${topDoc.content}`;
 }
